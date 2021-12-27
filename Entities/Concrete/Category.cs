@@ -15,5 +15,7 @@ namespace Entities.Concrete
         public string Description { get; set; }
         public bool Status { get; set; }
 
+        public List<Article> Articles { get; set; }
+
     }
 }
