@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,11 @@ namespace Demo.Controllers
 {
     public class CategoryController : Controller
     {
+        CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
         public IActionResult Index()
         {
-            return View();
+            var values = categoryManager.GetAll();
+            return View(values);
         }
     }
 }
