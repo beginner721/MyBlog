@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,13 @@ namespace Business.Concrete
 {
     public class ArticleManager : IArticleService
     {
+        IArticleDal _articleDal;
+
+        public ArticleManager(IArticleDal articleDal)
+        {
+            _articleDal = articleDal;
+        }
+
         public void Add(Article article)
         {
             throw new NotImplementedException();
@@ -22,12 +30,21 @@ namespace Business.Concrete
 
         public List<Article> GetAll()
         {
-            throw new NotImplementedException();
+            return _articleDal.GetAll();
         }
 
         public Category GetById(int id)
         {
             throw new NotImplementedException();
+        }
+        public List<Article> GetArticleById(int id)
+        {
+            return _articleDal.GetAll(a => a.Id == id);
+        }
+
+        public List<Article> GetAllWithCategory()
+        {
+            return _articleDal.GetAllWithCategory();
         }
 
         public void Update(Article article)

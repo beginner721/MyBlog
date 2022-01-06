@@ -44,6 +44,14 @@ namespace DataAccess.Concrete.EntityFramework
             }
         }
 
+        public List<T> GetAll(Expression<Func<T, bool>> filter)
+        {
+            using (MyBlogContext context = new MyBlogContext())
+            {
+                return context.Set<T>().Where(filter).ToList();
+            }
+        }
+
         public void Update(T entity)
         {
             using (MyBlogContext context = new MyBlogContext())
