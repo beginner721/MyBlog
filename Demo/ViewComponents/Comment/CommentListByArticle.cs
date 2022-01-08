@@ -11,9 +11,9 @@ namespace Demo.ViewComponents.Comment
     public class CommentListByArticle : ViewComponent
     {
         CommentManager commentManager = new CommentManager(new EfCommentDal());
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int id)
         {
-            var comments = commentManager.GetAll(5);
+            var comments = commentManager.GetAll(id);
             return View(comments);
         }
     }

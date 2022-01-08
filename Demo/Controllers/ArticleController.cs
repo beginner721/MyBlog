@@ -19,6 +19,7 @@ namespace Demo.Controllers
         }
         public IActionResult ReadMore(int id)
         {
+            ViewBag.id = id;
             var article = articleManager.GetArticleById(id);
             return View(article);
         }
