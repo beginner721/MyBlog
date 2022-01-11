@@ -1,0 +1,79 @@
+﻿@model Entities.Concrete.Writer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<section class="main-content-w3layouts-agileits">
+    <div class="container">
+        <h3 class="tittle">Kayıt Ol</h3>
+        <div class="inner-sec">
+            <div class="login p-5 bg-light mx-auto mw-100">
+                @using (Html.BeginForm("Index", "Register", FormMethod.Post))
+                {
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom01">Ad</label>
+
+                            @Html.TextBoxFor(a=> a.FirstName)
+                            @Html.ValidationMessageFor(a=> a.FirstName)
+                            @*<input type="text" class="form-control" id="validationDefault01" name="FirstName" placeholder="" required="">*@
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom02">Soyad</label>
+
+                            @Html.TextBoxFor(a => a.LastName)
+                            @Html.ValidationMessageFor(a => a.LastName)
+                            @*<input type="text" class="form-control" id="validationDefault02" name="LastName" placeholder="" required="">*@
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="validationCustom02">Mail</label>
+                            
+                            @Html.TextBoxFor(a => a.Email)
+                            @Html.ValidationMessageFor(a => a.Email)
+                            @*<input type="email" class="form-control" id="validationDefault02" name="Email" placeholder="" required="">*@
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1 mb-2">Şifre</label>
+
+                            @Html.TextBoxFor(a => a.Password)
+                            @Html.ValidationMessageFor(a => a.Password)
+                            @*<input type="password" class="form-control" id="password1" name="Password" placeholder="" required="">*@
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword2 mb-2">Tekrar Şifre</label>
+                            <input type="password" class="form-control" id="password2" placeholder="" required="">
+                        </div>
+                    </div>
+                    <button onclick="compareText()" type="submit" class="btn btn-primary submit mb-4">Register</button>
+                    <p>
+                        <a href="#" id="btn1">By clicking Signup, I agree to your terms</a>
+                    </p>
+                }
+
+            </div>
+        </div>
+    </div>
+    <br />
+    <script>
+        $("#btn1").click(function () {
+            swal("KULLANIM ŞARTLARI\n \n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit finibus quam, a aliquet ipsum luctus at. Sed nulla velit, mollis non placerat vitae, porttitor nec tellus. Maecenas egestas fringilla nisi in iaculis. Nullam fringilla lorem sit amet tortor euismod, at pharetra nunc laoreet. Vestibulum a laoreet lectus. Sed iaculis ultrices nulla, non congue tellus fermentum ac. Fusce lacinia imperdiet lectus, vitae rutrum sem sollicitudin eu. Nulla fermentum elit in felis iaculis, vitae dignissim erat blandit. Vivamus libero orci, tristique eget suscipit eu, vestibulum vitae sem. Cras velit magna, venenatis eget enim vel, varius convallis orci. Integer bibendum risus mauris, in rutrum felis pretium vitae. Quisque gravida auctor mauris ut sagittis. Praesent vitae sem ac arcu imperdiet tincidunt.");
+
+        });
+
+        function compareText() {
+            var text1 = document.getElementById("password1").value;
+            var text2 = document.getElementById("password2").value;
+
+            if (text1 == text2) {
+                alert("Same Text!");
+            } else {
+                alert("Different Texts.");
+            }
+        }
+    </script>
+</section>

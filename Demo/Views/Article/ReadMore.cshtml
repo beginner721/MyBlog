@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <body>
-    
+
 
     <!--//banner-->
     <section class="banner-bottom">
@@ -57,12 +57,11 @@
                             <a href="/Article/Index" class="btn btn-primary read-m">Blog Listesi</a>
                         </div>
                     }
-                   
-                        @await Component.InvokeAsync("CommentListByArticle", new { id = ViewBag.id })
-                        @*@await Html.PartialAsync("~/Views/Comment/PartialCommentListByArticle.cshtml")*@
-                        @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
-                    
 
+
+                    @await Component.InvokeAsync("CommentListByArticle", new { id = ViewBag.id })
+                    @*@await Html.PartialAsync("~/Views/Comment/PartialCommentListByArticle.cshtml")*@
+                    @await Html.PartialAsync("~/Views/Comment/PartialAddComment.cshtml")
 
                 </div>
 
@@ -82,7 +81,7 @@
                             </form>
 
                         </div>
-                        @await Component.InvokeAsync("CategoryList") 
+                        @await Component.InvokeAsync("CategoryList")
                         <div class="tech-btm">
                             <h4>Yazarın Diğer Yazıları</h4>
 
