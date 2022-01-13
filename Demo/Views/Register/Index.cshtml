@@ -17,22 +17,22 @@
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">Ad</label>
 
-                            @Html.TextBoxFor(a=> a.FirstName)
-                            @Html.ValidationMessageFor(a=> a.FirstName)
+                            @Html.TextBoxFor(a=> a.FirstName, new {@class="form-control" })
+                            @Html.ValidationMessageFor(a=> a.FirstName,"", new {@class="text-danger" })
                             @*<input type="text" class="form-control" id="validationDefault01" name="FirstName" placeholder="" required="">*@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom02">Soyad</label>
 
-                            @Html.TextBoxFor(a => a.LastName)
-                            @Html.ValidationMessageFor(a => a.LastName)
+                            @Html.TextBoxFor(a => a.LastName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.LastName, "", new { @class = "text-danger" })
                             @*<input type="text" class="form-control" id="validationDefault02" name="LastName" placeholder="" required="">*@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom02">Mail</label>
                             
-                            @Html.TextBoxFor(a => a.Email)
-                            @Html.ValidationMessageFor(a => a.Email)
+                            @Html.TextBoxFor(a => a.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Email, "", new { @class = "text-danger" })
                             @*<input type="email" class="form-control" id="validationDefault02" name="Email" placeholder="" required="">*@
                         </div>
                     </div>
@@ -40,8 +40,8 @@
                         <div class="form-group col-md-6">
                             <label for="exampleInputPassword1 mb-2">Şifre</label>
 
-                            @Html.TextBoxFor(a => a.Password)
-                            @Html.ValidationMessageFor(a => a.Password)
+                            @Html.TextBoxFor(a => a.Password, new { @class = "form-control",type="password",id="password1" ,required=""})
+                            @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
                             @*<input type="password" class="form-control" id="password1" name="Password" placeholder="" required="">*@
                         </div>
                         <div class="form-group col-md-6">
@@ -61,14 +61,14 @@
     <br />
     <script>
         $("#btn1").click(function () {
-            swal("KULLANIM ŞARTLARI\n \n Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit finibus quam, a aliquet ipsum luctus at. Sed nulla velit, mollis non placerat vitae, porttitor nec tellus. Maecenas egestas fringilla nisi in iaculis. Nullam fringilla lorem sit amet tortor euismod, at pharetra nunc laoreet. Vestibulum a laoreet lectus. Sed iaculis ultrices nulla, non congue tellus fermentum ac. Fusce lacinia imperdiet lectus, vitae rutrum sem sollicitudin eu. Nulla fermentum elit in felis iaculis, vitae dignissim erat blandit. Vivamus libero orci, tristique eget suscipit eu, vestibulum vitae sem. Cras velit magna, venenatis eget enim vel, varius convallis orci. Integer bibendum risus mauris, in rutrum felis pretium vitae. Quisque gravida auctor mauris ut sagittis. Praesent vitae sem ac arcu imperdiet tincidunt.");
+            swal("Kullanım Şartları","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit finibus quam, a aliquet ipsum luctus at. Sed nulla velit, mollis non placerat vitae, porttitor nec tellus. Maecenas egestas fringilla nisi in iaculis. Nullam fringilla lorem sit amet tortor euismod, at pharetra nunc laoreet. Vestibulum a laoreet lectus. Sed iaculis ultrices nulla, non congue tellus fermentum ac. Fusce lacinia imperdiet lectus, vitae rutrum sem sollicitudin eu. Nulla fermentum elit in felis iaculis, vitae dignissim erat blandit. Vivamus libero orci, tristique eget suscipit eu, vestibulum vitae sem. Cras velit magna, venenatis eget enim vel, varius convallis orci. Integer bibendum risus mauris, in rutrum felis pretium vitae. Quisque gravida auctor mauris ut sagittis. Praesent vitae sem ac arcu imperdiet tincidunt.");
 
         });
 
         function compareText() {
             var text1 = document.getElementById("password1").value;
             var text2 = document.getElementById("password2").value;
-
+            /*uyarı verse de siteye request gidiyor*/
             if (text1 == text2) {
                 alert("Same Text!");
             } else {
