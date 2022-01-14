@@ -18,5 +18,6 @@ namespace Entities.Concrete
         public string About { get; set; }
         public string Image { get; set; }
         public bool Status { get; set; }
+        public List<Article> Articles { get; set; }
     }
 }

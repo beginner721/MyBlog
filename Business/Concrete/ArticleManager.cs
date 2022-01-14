@@ -51,5 +51,10 @@ namespace Business.Concrete
         {
             throw new NotImplementedException();
         }
+
+        public List<Article> GetAllByWriter(int id)
+        {
+            return _articleDal.GetAll(a => a.WriterId == id);
+        }
     }
 }
