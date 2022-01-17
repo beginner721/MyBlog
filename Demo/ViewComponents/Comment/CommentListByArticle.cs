@@ -13,7 +13,7 @@ namespace Demo.ViewComponents.Comment
         CommentManager commentManager = new CommentManager(new EfCommentDal());
         public IViewComponentResult Invoke(int id)
         {
-            var comments = commentManager.GetAll(id);
+            var comments = commentManager.GetCommentByArticleId(id);
             return View(comments);
         }
     }

@@ -30,7 +30,12 @@ namespace Business.Concrete
 
         public List<Comment> GetAll()
         {
-            throw new NotImplementedException();
+            return _commentDal.GetAll();
+        }
+
+        public List<Comment> GetCommentByArticleId(int id)
+        {
+            return _commentDal.GetAll(a=> a.ArticleId==id);
         }
     }
 }

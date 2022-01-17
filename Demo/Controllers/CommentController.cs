@@ -1,5 +1,6 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,25 @@ namespace Demo.Controllers
         {
             return View();
         }
+        [HttpGet]
         public PartialViewResult PartialAddComment()
         {
             return PartialView();
         }
-        public PartialViewResult PartialCommentListByArticle(int id)
+        [HttpPost]
+        public PartialViewResult PartialAddComment(Comment comment)
         {
-            var commentList= commentManager.GetAll(id);
-            return PartialView(commentList);
+            comment.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
+            comment.Status = true;
+            comment.ArticleId = 5;
+            commentManager.Add(comment);
+            return PartialView();
         }
+        //public PartialViewResult PartialCommentListByArticle(int id)
+        //{
+        //    var commentList= commentManager.GetAll(id);
+        //    return PartialView(commentList);
+        //}
+       
     }
 }

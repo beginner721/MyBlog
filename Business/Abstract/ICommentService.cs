@@ -13,6 +13,7 @@ namespace Business.Abstract
        // void Delete(Comment comment);
       //  void Update(Comment comment);
         List<Comment> GetAll();
+        List<Comment> GetCommentByArticleId(int id);
        // Comment GetById(int id);
     }
 }
