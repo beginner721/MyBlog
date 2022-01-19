@@ -8,7 +8,7 @@
 
 
 <body>
-   
+
     <!--/main-->
     <section class="main-content-w3layouts-agileits">
 
@@ -77,15 +77,15 @@
                         <div class="col-md-6 con-left">
                             <div class="form-group">
                                 <label for="validationCustom01 my-2">Adınız</label>
-                                <input class="form-control" type="text" name="Username" placeholder="" required="">
+                                <input class="form-control" type="text" id="iUser" name="Username" placeholder="" required="">
                             </div>
                             <div class="form-group">
                                 <label for="exampleFormControlInput1">E-posta Adresiniz</label>
-                                <input class="form-control" type="email" name="Mail" placeholder="" required="">
+                                <input class="form-control" type="email" id="iMail" name="Mail" placeholder="" required="">
                             </div>
                             <div class="form-group">
                                 <label for="validationCustom03 my-2">Mesaj Konusu</label>
-                                <input class="form-control" type="text" name="Subject" placeholder="" required="">
+                                <input class="form-control" type="text" id="iSub" name="Subject" placeholder="" required="">
                             </div>
                         </div>
                         <div class="col-md-6 con-right">
@@ -93,12 +93,56 @@
                                 <label for="textarea">Mesajınız</label>
                                 <textarea id="textarea" name="Message" placeholder=""></textarea>
                             </div>
-                            <input class="form-control" type="submit" value="Gönder">
+                            <input class="form-control" id="send" type="submit" value="Gönder">
 
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script>
+            $(document).ready(function () {
+
+                $("#send").click(function (e) {
+                    e.preventDefault();
+                    var Username = document.getElementById("iUser").value; //user name field
+                    var Mail = document.getElementById("iMail").value; //comment field
+                    var Subject = document.getElementById("iSub").value; //comment field
+                    var Message = document.getElementById("textarea").value; //comment field
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'Contact/Index',
+                        data: { Username: Username, Mail : Mail , Subject : Subject, Message : Message},
+                        ContentType: 'application/Json',
+                        dataType: "json",
+                        success: function (response) {
+                            if (response=="OK") {
+                                alert("Mesajınız başarıyla iletilmiştir.");
+                                window.location.reload();
+                            }
+                            else {
+                                alert("Mesaj gönderme başarısız.");
+                            }
+                            
+                           
+                        },
+                        error: function () {
+                            alert("Mesaj gönderilemiyor.");
+
+                        }
+                    });
+                });
+            });
+                            //$("#send").click(function () {
+                            //    alert("hop");
+                            //    if () {
+
+                            //    }
+
+                            //});
+        </script>
+
     </section>
 </body>

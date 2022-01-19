@@ -23,7 +23,9 @@ namespace Demo.Controllers
             contact.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
             contact.Status = true;
             contactManager.Add(contact);
-            return RedirectToAction("Index","Article");
+            return Json("OK");
+
+            //return RedirectToAction("Index","Article");
         }
     }
 }
