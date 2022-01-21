@@ -22,13 +22,13 @@ namespace Demo.Controllers
             return PartialView();
         }
         [HttpPost]
-        public PartialViewResult PartialAddComment(Comment comment)
+        public IActionResult PartialAddComment(Comment comment)
         {
             comment.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
             comment.Status = true;
             comment.ArticleId = 5;
             commentManager.Add(comment);
-            return PartialView();
+            return Json("OK");
         }
         //public PartialViewResult PartialCommentListByArticle(int id)
         //{

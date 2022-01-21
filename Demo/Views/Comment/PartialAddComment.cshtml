@@ -10,68 +10,40 @@
 
             @*<input class="form-control" type="text" name="Title" placeholder="Başlık" required="">*@
 
-            <textarea class="form-control" name="Content" id="com" placeholder="Yorum yaz ..." required=""></textarea>
-            <button type="submit" id="btn_comment" class="btn btn-primary submit">Yorum Yap</button>
+            <textarea class="form-control" name="Content" id="content" placeholder="Yorum yaz ..." required=""></textarea>
+            <button type="submit" id="comment1" class="btn btn-primary submit">Yorum Yap</button>
         </form>
     </div>
 </div>
 <script>
-    //$(document).ready(function () {
-    //    //global vars
-    //    var userName = document.getElementById("user").value; //user name field
-    //    var userComment = document.getElementById("com").value; //comment field
 
-    //    //function to check name and comment field 
-    //    function checkCommentsForm() {
-    //        if (userName.attr("value") && userComment.attr("value"))
-    //            return true;
-    //        else
-    //            return false;
-    //    }
 
-        
-    //    //When form submitted
-    //        $("#btn_comment").click(function () {
+    $(document).ready(function () {
+        $("#comment1").click(function (e) {
+          /*  e.preventDefault();*/
+            var userName = document.getElementById("user").value; //user name field
+            var userComment = document.getElementById("content").value; //comment field
 
-    //            if (checkCommentsForm()) {
-    //                var comment = {
-    //                    "Username": "#user",
-    //                    "Content":"#com"
-    //                }
-    //            $.ajax({
-    //                type: "post"
-    //                , url: "/Comment/PartialAddComment"
-    //                , data: comment,
-    //                success: function (msg) { $('#targetDiv').hide(); $("#targetDiv").html("<h3>" + msg + "</h3>").fadeIn("slow"); }
-    //            });
-    //        }
-    //        else alert("Please fill UserName & Password!");
-    //        return false;
-    //    });
-    //});
+            $.ajax({
+                type: 'POST',
+                url: 'Comment/PartialAddComment',
+                data: { Username: userName, Content: userComment },
+                success: function (response) {
+                    if (response == "OK") {
+                        alert("Yorumunuz onaylanmak üzere iletildi. Teşekkürler.");
+                    } else {
+                        alert("Yorum gönderme başarısız.");
+                    }
+                },
+                error: function () {
+                    alert("Yorum gönderilemiyor.");
+
+                }
+            });
+
+        });
+    });
 
 
 
-
-
-    //$(document).ready(function () {
-    //    // Add the page method call as an onclick handler for the div.
-    //    $("#btn_comment").click(function () {
-    //        $.ajax({
-    //            type: "POST",
-    //            url: "/Comment/PartialAddComment",
-    //            data: { someParameter: "some value" },
-    //          /*  contentType: "application/json; charset=utf-8",*/
-    //           /* dataType: "json",*/
-    //            success: function (response) {
-    //                if (response=="OK") {
-    //                    alert("Yorum başarılı")
-    //                }
-    //                else {
-    //                    alert("Yorum başarısız")
-    //                }
-    //            }
-    //        });
-    //    });
-    //});
 </script>
