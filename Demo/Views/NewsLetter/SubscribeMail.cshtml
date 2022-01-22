@@ -2,8 +2,40 @@
     <h4>Yazılanlardan Haberdar Ol</h4>
     <p>Yeni yazılarımızı eposta adresinize bildirim olarak almak isterseniz abone olun.</p>
     <form action="/NewsLetter/SubscribeMail" method="post">
-        <input type="email" placeholder="Email" required="" name="mail">
-        <input type="submit" value="Abone Ol">
+        <input type="email" placeholder="Email" id="email" required="" name="mail">
+        <input type="submit" id="btnsend" value="Abone Ol">
     </form>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(document).ready(function () {
 
+            $("#btnsend").click(function (e) {
+                e.preventDefault(); /*buttonun kendi görevlerinin tamamını iptal ediyor*/
+                var Email = document.getElementById("email").value; //mailfield
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'NewsLetter/SubscribeMail',
+                    data: { Mail: Email },
+                    ContentType: 'application/Json',
+                    dataType: "json",
+                    success: function (response) {
+                        if (response == "OK") {
+                            alert("Mesajınız başarıyla iletilmiştir.");
+                            window.location.reload();
+                        }
+                        else {
+                            alert("Mesaj gönderme başarısız.");
+                        }
+
+
+                    },
+                    error: function () {
+                        alert("Mesaj gönderilemiyor.");
+
+                    }
+                });
+            });
+        });
+    </script>
 </div>

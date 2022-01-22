@@ -1,7 +1,4 @@
 ﻿
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-
 <div class="comment-top">
     <h4>Yorum bırakın</h4>
     <div class="comment-bottom">
@@ -11,23 +8,26 @@
             @*<input class="form-control" type="text" name="Title" placeholder="Başlık" required="">*@
 
             <textarea class="form-control" name="Content" id="content" placeholder="Yorum yaz ..." required=""></textarea>
-            <button type="submit" id="comment1" class="btn btn-primary submit">Yorum Yap</button>
+            <button type="submit" id="btncomment" class="btn btn-primary submit">Yorum Yap</button>
         </form>
     </div>
 </div>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
 
 
     $(document).ready(function () {
-        $("#comment1").click(function (e) {
-          /*  e.preventDefault();*/
-            var userName = document.getElementById("user").value; //user name field
-            var userComment = document.getElementById("content").value; //comment field
+        $("#btncomment").click(function (e) {
+            e.preventDefault();
+            var Username = document.getElementById("user").value; //user name field
+            var Content = document.getElementById("content").value; //comment field
 
             $.ajax({
                 type: 'POST',
                 url: 'Comment/PartialAddComment',
-                data: { Username: userName, Content: userComment },
+                data: { Username: Username, Content: Content },
+                ContentType: 'application/Json',
+                dataType: "json",
                 success: function (response) {
                     if (response == "OK") {
                         alert("Yorumunuz onaylanmak üzere iletildi. Teşekkürler.");
