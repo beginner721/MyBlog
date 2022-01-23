@@ -35,8 +35,8 @@
                         alert("Yorum gönderme başarısız.");
                     }
                 },
-                error: function () {
-                    alert("Yorum gönderilemiyor.");
+                error: function (e) {
+                    console.log(e)
 
                 }
             });
