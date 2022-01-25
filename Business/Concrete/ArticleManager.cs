@@ -32,7 +32,10 @@ namespace Business.Concrete
         {
             return _articleDal.GetAll();
         }
-
+        public List<Article> GetLastThreeBlog()
+        {
+            return _articleDal.GetAll().TakeLast(3).ToList();
+        }
         public Category GetById(int id)
         {
             throw new NotImplementedException();

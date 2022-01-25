@@ -1,6 +1,7 @@
 ﻿
 using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
+    [AllowAnonymous]
     public class ArticleController : Controller
     {
         ArticleManager articleManager = new ArticleManager(new EfArticleDal());

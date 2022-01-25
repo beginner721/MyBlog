@@ -6,7 +6,6 @@
 
 <link href="~/BlogTheme/css/contact.css" rel='stylesheet' type='text/css' />
 
-
 <body>
 
     <!--/main-->
@@ -101,6 +100,7 @@
             </div>
         </div>
         <script src="~/lib/jquery/dist/jquery.js"></script>
+        @*yukarıdaki script alanı olmadan çalışmıyor, renderbody olayı çözülmeli.*@
         <script>
             $(document).ready(function () {
 
@@ -113,7 +113,7 @@
 
                     $.ajax({
                         type: 'POST',
-                        url: 'Contact/Index',
+                        url: '/Contact/Index',
                         data: { Username: Username, Mail : Mail , Subject : Subject, Message : Message},
                         ContentType: 'application/Json',
                         dataType: "json",

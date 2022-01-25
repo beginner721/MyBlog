@@ -17,8 +17,8 @@
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom01">Ad</label>
 
-                            @Html.TextBoxFor(a=> a.FirstName, new {@class="form-control" })
-                            @Html.ValidationMessageFor(a=> a.FirstName,"", new {@class="text-danger" })
+                            @Html.TextBoxFor(a => a.FirstName, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.FirstName, "", new { @class = "text-danger" })
                             @*<input type="text" class="form-control" id="validationDefault01" name="FirstName" placeholder="" required="">*@
                         </div>
                         <div class="col-md-6 mb-3">
@@ -30,7 +30,7 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="validationCustom02">Mail</label>
-                            
+
                             @Html.TextBoxFor(a => a.Email, new { @class = "form-control" })
                             @Html.ValidationMessageFor(a => a.Email, "", new { @class = "text-danger" })
                             @*<input type="email" class="form-control" id="validationDefault02" name="Email" placeholder="" required="">*@
@@ -40,7 +40,7 @@
                         <div class="form-group col-md-6">
                             <label for="exampleInputPassword1 mb-2">Şifre</label>
 
-                            @Html.TextBoxFor(a => a.Password, new { @class = "form-control",type="password",id="password1" ,required=""})
+                            @Html.TextBoxFor(a => a.Password, new { @class = "form-control", type = "password", id = "password1", required = "" })
                             @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
                             @*<input type="password" class="form-control" id="password1" name="Password" placeholder="" required="">*@
                         </div>
@@ -49,9 +49,14 @@
                             <input type="password" class="form-control" id="password2" placeholder="" required="">
                         </div>
                     </div>
-                    <button onclick="compareText()" type="submit" id="btn_register" class="btn btn-primary submit mb-4">Register</button>
+                    <button @*onclick="compareText()"*@ type="submit" id="btn_register" class="btn btn-primary submit mb-4">Register</button>
+
                     <p>
+
+
                         <a href="#" id="btn1">By clicking Signup, I agree to your terms</a>
+
+
                     </p>
                 }
 
@@ -61,26 +66,39 @@
     <br />
     <script>
         $("#btn1").click(function () {
-            swal("Kullanım Şartları","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit finibus quam, a aliquet ipsum luctus at. Sed nulla velit, mollis non placerat vitae, porttitor nec tellus. Maecenas egestas fringilla nisi in iaculis. Nullam fringilla lorem sit amet tortor euismod, at pharetra nunc laoreet. Vestibulum a laoreet lectus. Sed iaculis ultrices nulla, non congue tellus fermentum ac. Fusce lacinia imperdiet lectus, vitae rutrum sem sollicitudin eu. Nulla fermentum elit in felis iaculis, vitae dignissim erat blandit. Vivamus libero orci, tristique eget suscipit eu, vestibulum vitae sem. Cras velit magna, venenatis eget enim vel, varius convallis orci. Integer bibendum risus mauris, in rutrum felis pretium vitae. Quisque gravida auctor mauris ut sagittis. Praesent vitae sem ac arcu imperdiet tincidunt.");
+            swal("Kullanım Şartları", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam suscipit finibus quam, a aliquet ipsum luctus at. Sed nulla velit, mollis non placerat vitae, porttitor nec tellus. Maecenas egestas fringilla nisi in iaculis. Nullam fringilla lorem sit amet tortor euismod, at pharetra nunc laoreet. Vestibulum a laoreet lectus. Sed iaculis ultrices nulla, non congue tellus fermentum ac. Fusce lacinia imperdiet lectus, vitae rutrum sem sollicitudin eu. Nulla fermentum elit in felis iaculis, vitae dignissim erat blandit. Vivamus libero orci, tristique eget suscipit eu, vestibulum vitae sem. Cras velit magna, venenatis eget enim vel, varius convallis orci. Integer bibendum risus mauris, in rutrum felis pretium vitae. Quisque gravida auctor mauris ut sagittis. Praesent vitae sem ac arcu imperdiet tincidunt.");
 
         });
 
 
-  
-            /*uyarı verse de siteye request gidiyor*/
 
-            $("#btn_register").click(function (e) {
-                var text1 = document.getElementById("password1").value;
-                var text2 = document.getElementById("password2").value;
 
-                if (text1 == text2) {
-                   
-                    alert("Kayıt başarılı. Anasayfa'ya yönlendiriliyorsunuz...");
-                } else {
-                    alert("Şifreleriniz uyuşmuyor. Tekrar deneyin.");
-                    e.preventDefault();
-                }
-            });
+
+        $("#btn_register").click(function (e) {
+            var text1 = document.getElementById("password1").value;
+            var text2 = document.getElementById("password2").value;
+
+            if (text1 == text2) {
+
+                alert("Kayıt başarılı. Anasayfa'ya yönlendiriliyorsunuz...");
+            } else {
+                alert("Şifreleriniz uyuşmuyor. Tekrar deneyin.");
+                e.preventDefault();
+            }
+        });
+
+            //Bu kısımda refresh engellenemiyor.
+            //function compareText() {
+            //    var text1 = document.getElementById("password1").value;
+            //    var text2 = document.getElementById("password2").value;
+
+            //    if (text1 == text2) {
+            //        alert("Kayıt Başarılı, go to ana sayfa.!");
+            //    } else {
+            //        alert("Şifreleriniz uyuşmuyor.");
+
+            //    }
+            //}
 
     </script>
 </section>
