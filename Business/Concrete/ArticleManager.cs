@@ -18,16 +18,6 @@ namespace Business.Concrete
             _articleDal = articleDal;
         }
 
-        public void Add(Article article)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Article article)
-        {
-            throw new NotImplementedException();
-        }
-
         public List<Article> GetAll()
         {
             return _articleDal.GetAll();
@@ -35,10 +25,6 @@ namespace Business.Concrete
         public List<Article> GetLastThreeBlog()
         {
             return _articleDal.GetAll().TakeLast(3).ToList();
-        }
-        public Category GetById(int id)
-        {
-            throw new NotImplementedException();
         }
         public List<Article> GetArticleById(int id)
         {
@@ -50,14 +36,29 @@ namespace Business.Concrete
             return _articleDal.GetAllWithCategory();
         }
 
-        public void Update(Article article)
+        public List<Article> GetAllByWriter(int id)
+        {
+            return _articleDal.GetAll(a => a.WriterId == id);
+        }
+
+        public void Add(Article entity)
         {
             throw new NotImplementedException();
         }
 
-        public List<Article> GetAllByWriter(int id)
+        public void Update(Article entity)
         {
-            return _articleDal.GetAll(a => a.WriterId == id);
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Article entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Article GetById(int id)
+        {
+            return _articleDal.Get(id);
         }
     }
 }

@@ -23,6 +23,7 @@ namespace Demo.Controllers
         {
             ViewBag.id = id;
             var article = articleManager.GetArticleById(id);
+            //Bu method aslında GetById olmalı, tek bir Article'ı döndürüyor. List döndürmesine gerek yok. View'ı ile birlikte düzeltilecek.
             return View(article);
         }
     }

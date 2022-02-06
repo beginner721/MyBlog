@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IArticleService
+    public interface IArticleService:IGenericService<Article>
     {
-        void Add(Article article);
-        void Delete(Article article);
-        void Update(Article article);
-        List<Article> GetAll();
-        Category GetById(int id);
         List<Article> GetAllWithCategory();
         List<Article> GetAllByWriter(int id);
 

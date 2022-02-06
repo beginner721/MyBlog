@@ -20,10 +20,20 @@ namespace Demo.Controllers
         {
             return View();
         }
-
-        public IActionResult Testciq()
+        [AllowAnonymous]
+        public IActionResult Test()
         {
             return View();
+        }
+        [AllowAnonymous]
+        public PartialViewResult WriterNavbarPartial()
+        {
+            return PartialView();
+        }
+        [AllowAnonymous]
+        public PartialViewResult WriterFooterPartial()
+        {
+            return PartialView();
         }
     }
 }
