@@ -43,7 +43,7 @@ namespace Business.Concrete
 
         public void Add(Article entity)
         {
-            throw new NotImplementedException();
+            _articleDal.Add(entity);
         }
 
         public void Update(Article entity)
