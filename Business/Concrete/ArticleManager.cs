@@ -60,5 +60,10 @@ namespace Business.Concrete
         {
             return _articleDal.Get(id);
         }
+
+        public List<Article> GetAllWithCategoryByWriter(int id)
+        {
+            return _articleDal.GetAllWithCategoryByWriter(id);
+        }
     }
 }

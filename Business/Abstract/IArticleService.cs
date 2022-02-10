@@ -11,6 +11,7 @@ namespace Business.Abstract
     {
         List<Article> GetAllWithCategory();
         List<Article> GetAllByWriter(int id);
+        List<Article> GetAllWithCategoryByWriter(int id);
 
     }
 }

@@ -33,7 +33,7 @@ namespace Demo.Controllers
         [HttpGet]
         public IActionResult ArticleListByWriter()
         {
-            var values = articleManager.GetAllByWriter(1);
+            var values = articleManager.GetAllWithCategoryByWriter(1);
             return View(values);
         }
         [HttpGet]

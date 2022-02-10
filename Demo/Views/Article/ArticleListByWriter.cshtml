@@ -23,8 +23,14 @@
         <tr>
             <td>@article.Id</td>
             <td>@article.Title</td>
-            <td>@article.CreateDate</td>
-            <td>@article.CategoryId</td>
+            <td>@(((DateTime)article.CreateDate).ToString("dd-MM-yyyy"))</td>
+            <td>@article.Category.Name</td>
+            @if (article.Status)
+           {
+               <td><span class="badge badge-success">Aktif</span></td>
+           }else{ 
+               <td><span class="badge badge-dark">Pasif</span></td>
+           }
             <td>@article.Status</td>
             <td> <a href="#" class="btn btn-danger">Sil</a> </td>
             <td> <a href="#" class="btn btn-gradient-primary">Düzenle</a> </td>

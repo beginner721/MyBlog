@@ -13,10 +13,14 @@ namespace Business.ValidationRules
         public ArticleValidator()
         {
             RuleFor(a=> a.Title).NotEmpty().WithMessage("Makale başlığı boş geçilemez.");
-            RuleFor(a => a.Content).NotEmpty().WithMessage("İçerik boş olamaz");
-            RuleFor(a => a.Image).NotEmpty().WithMessage("Görsel boş olamaz");
-            RuleFor(a => a.Title).MaximumLength(150).WithMessage("150 Karakterden fazla girilemez.");
+            RuleFor(a => a.Title).MaximumLength(100).WithMessage("150 Karakterden fazla girilemez.");
             RuleFor(a => a.Title).MinimumLength(4).WithMessage("4 Karakterden az girilemez.");
+
+            RuleFor(a => a.Content).NotEmpty().WithMessage("İçerik boş olamaz");
+            RuleFor(a => a.Content).MinimumLength(135).WithMessage("İçerik en az 135 karakter olmalıdır.");
+
+            RuleFor(a => a.Image).NotEmpty().WithMessage("Görsel boş olamaz");
+            
 
         }
     }

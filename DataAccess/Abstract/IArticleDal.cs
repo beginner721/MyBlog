@@ -10,5 +10,6 @@ namespace DataAccess.Abstract
     public interface IArticleDal:IEntityRepository<Article>
     {
         List<Article> GetAllWithCategory();
+        List<Article> GetAllWithCategoryByWriter(int id);
     }
 }
