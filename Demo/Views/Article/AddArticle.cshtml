@@ -25,7 +25,7 @@
     @Html.TextBoxFor(a=> a.ThumbnailImage,new{@class="form-control"})
     <br />
     @Html.Label("Makale Kategorisi")
-    @Html.TextBoxFor(a=> a.CategoryId,new{@class="form-control"})
+    @Html.DropDownListFor(a=> a.CategoryId,(List<SelectListItem>)ViewBag.CategoryValues, new{@class="form-control"})
     <br />
     <button class="btn btn-info">Kaydet</button>
 }
