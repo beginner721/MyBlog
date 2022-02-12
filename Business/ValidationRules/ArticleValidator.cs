@@ -20,6 +20,8 @@ namespace Business.ValidationRules
             RuleFor(a => a.Content).MinimumLength(135).WithMessage("İçerik en az 135 karakter olmalıdır.");
 
             RuleFor(a => a.Image).NotEmpty().WithMessage("Görsel boş olamaz");
+
+            RuleFor(a => a.CategoryId).NotEmpty().WithMessage("Kategori boş olamaz");
             
 
         }

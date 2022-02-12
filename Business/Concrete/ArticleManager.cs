@@ -48,12 +48,12 @@ namespace Business.Concrete
 
         public void Update(Article entity)
         {
-            throw new NotImplementedException();
+            _articleDal.Update(entity);
         }
 
         public void Delete(Article entity)
         {
-            throw new NotImplementedException();
+            _articleDal.Delete(entity);
         }
 
         public Article GetById(int id)

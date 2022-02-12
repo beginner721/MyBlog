@@ -1,0 +1,25 @@
+﻿@model Entities.Concrete.Article
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Makale düzenleme</h1>
+@using (Html.BeginForm("Edit", "Article", FormMethod.Post))
+{
+    @Html.Label("ID")
+    @Html.TextBoxFor(a=> a.Id,new {@class="form-control"})
+    @Html.Label("Makale Başlığı")
+    @Html.TextBoxFor(a=> a.Title,new {@class="form-control"})
+    @Html.Label("İçerik")
+    @Html.TextAreaFor(a=> a.Content,20,20,new {@class="form-control"})
+    @Html.Label("Makale Görseli")
+    @Html.TextBoxFor(a=> a.Image,new {@class="form-control"})
+    @Html.Label("Küçük Görsel/Thumbnail")
+    @Html.TextBoxFor(a=> a.ThumbnailImage,new {@class="form-control"})
+    @Html.Label("Kategori")
+      @Html.DropDownListFor(a=> a.CategoryId,(List<SelectListItem>)ViewBag.CategoryValues, new{@class="form-control"})
+    <br />
+    <button class="btn btn-success" onclick="return confirm('Değişiklikleri onaylıyor musun?')">Kaydet</button>
+}

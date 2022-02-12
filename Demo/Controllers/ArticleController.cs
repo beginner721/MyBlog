@@ -39,25 +39,20 @@ namespace Demo.Controllers
         [HttpGet]
         public IActionResult AddArticle()
         {
-            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
-            List<SelectListItem> categoryList = (from a in categoryManager.GetAll()
-                                                 select new SelectListItem
-                                                 {
-                                                     Text = a.Name,
-                                                     Value = a.Id.ToString()
-                                                 }).ToList();
-            //List<SelectListItem> articles = (from a in articleManager.GetAllWithCategory()
-            //                                 select new SelectListItem
-            //                                 {
-            //                                     Text = a.Category.ToString(),
-            //                                     Value = a.CategoryId.ToString()
-            //                                 }).ToList();
-            ViewBag.CategoryValues = categoryList;
+            //CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+            //List<SelectListItem> categoryList = (from a in categoryManager.GetAll()
+            //                                     select new SelectListItem
+            //                                     {
+            //                                         Text = a.Name,
+            //                                         Value = a.Id.ToString()
+            //                                     }).ToList();
+            ViewBag.CategoryValues = GetCategoryList();
             return View();
         }
         [HttpPost]
         public IActionResult AddArticle(Article article)
         {
+            ViewBag.CategoryValues = GetCategoryList();
             ArticleValidator validations = new ArticleValidator();
             ValidationResult result = validations.Validate(article);
             if (result.IsValid)
@@ -76,6 +71,40 @@ namespace Demo.Controllers
                 }
             }
             return View();
+        }
+        public IActionResult Delete(int id)
+        {
+            var article = articleManager.GetById(id);
+            articleManager.Delete(article);
+            return RedirectToAction("ArticleListByWriter","Article");
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var blogValue= articleManager.GetById(id);
+            ViewBag.CategoryValues = GetCategoryList();
+            return View(blogValue);
+        }
+        [HttpPost]
+        public IActionResult Edit(Article article)
+        {
+            article.WriterId = 1;
+            article.Status = true;
+            articleManager.Update(article);
+            return RedirectToAction("ArticleListByWriter");
+        }
+        
+        private List<SelectListItem> GetCategoryList()
+        {
+            CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
+            List<SelectListItem> categoryList = (from a in categoryManager.GetAll()
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = a.Name,
+                                                     Value = a.Id.ToString()
+                                                 }).ToList();
+
+            return categoryList;
         }
     }
 }

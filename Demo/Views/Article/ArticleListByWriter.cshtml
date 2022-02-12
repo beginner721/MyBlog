@@ -26,15 +26,26 @@
             <td>@(((DateTime)article.CreateDate).ToString("dd-MM-yyyy"))</td>
             <td>@article.Category.Name</td>
             @if (article.Status)
-           {
-               <td><span class="badge badge-success">Aktif</span></td>
-           }else{ 
-               <td><span class="badge badge-dark">Pasif</span></td>
-           }
+            {
+                <td><span class="badge badge-success">Aktif</span></td>
+            }
+            else
+            {
+                <td><span class="badge badge-dark">Pasif</span></td>
+            }
             <td>@article.Status</td>
-            <td> <a href="#" class="btn btn-danger">Sil</a> </td>
-            <td> <a href="#" class="btn btn-gradient-primary">Düzenle</a> </td>
+            <td> <a href="/Article/Delete/@article.Id" class="btn btn-danger" onclick="return confirm('Silmeyi onaylıyor musun?')">Sil</a> </td>
+            <td> <a href="/Article/Edit/@article.Id" class="btn btn-gradient-primary">Düzenle</a> </td>
         </tr>
     }
 </table>
-<a href="#" class="btn btn-primary">Yeni Blog Yaz</a>
+<a href="/Article/AddArticle" class="btn btn-primary">Yeni Blog Yaz</a>
+
+<script>
+    $(document).ready(function () {
+               $("#send").click(function (e) {
+                   var 
+               }
+    }
+
+</script>
