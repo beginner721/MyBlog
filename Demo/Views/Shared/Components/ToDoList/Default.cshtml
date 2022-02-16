@@ -1,0 +1,113 @@
+﻿@using Entities.Concrete
+@model List<ToDo>
+
+<div class="col-md-5 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title text-white">Todo</h4>
+
+            @* <div class="add-items d-flex">
+                <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?">
+                <button class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn" type="submit" onclick="/Dashboard/AddTodo" id="add-task">Add</button>
+                </div >*@
+            <form method="post" action="AddTodo">
+                <div class="add-items d-flex">
+                    <input type="text" name="Job" id="job" class="form-control" placeholder="What do you need to do today?" />
+                    <button class="btn btn-gradient-primary font-weight-bold" id="sendJob" type="submit">Ekle</button>
+                </div>
+            </form>
+
+            <div class="list-wrapper">
+                @foreach (var todo in Model)
+                {
+                    <ul class="d-flex flex-column-reverse todo-list todo-list-custom">
+                        @* <ul class="flex-md-column">*@
+                        <li>
+                            <div class="form-check">
+                                <label class="form-check-label">
+
+                                    <input class="checkbox" type="checkbox" id="currentJob"> @todo.Job
+                                </label>
+                                @*<button class="btn btn-gradient-dark" type="submit" id="deleteJob">Sil</button>*@
+                                @*                                <a href="/Dashboard/DeleteTodo/@todo.Id" class="btn btn-danger" id="deleteJob" onclick="return confirm('Silmeyi onaylıyor musun?')">Sil</a>
+                                *@                                <a href="/Dashboard/DeleteTodo/@todo.Id" class="remove mdi mdi-close-circle-outline" id="deleteJob" @* onclick="return confirm('Silmeyi onaylıyor musun?')"*@>Sil</a>
+                                @* <i class="remove mdi mdi-close-circle-outline" id="test"></i>*@
+                            </div>
+
+
+                        </li>
+
+                    </ul>
+                }
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+@*yukarıdaki script alanı olmadan çalışmıyor, renderbody olayı çözülmeli.*@
+<script>
+    $(document).ready(function () {
+        $("#sendJob").click(function (e) {
+            e.preventDefault();
+            var Job = document.getElementById("job").value;
+
+            $.ajax({
+                type: 'POST',
+                url: '/Dashboard/AddTodo',
+                data: { Job: Job},
+                ContentType: 'application/Json',
+                dataType: "json",
+                success: function (response) {
+                    if (response == "OK") {
+                        location.reload();
+
+                $("#ToDoList").html(response);
+
+                    } else {
+                        alert("Ekleme başarısız.");
+                    }
+                },
+                error: function (e) {
+                    alert("Todo gönderilemiyor. Error: ", e);
+                }
+            });
+        });
+    });
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#deleteJob").click(function (e) {
+           if(e.response=="OK"){
+               e.preventDefault();
+               alert("");
+           }
+
+            //var Job = document.getElementById("deleteJob").value;
+
+            //$.ajax({
+            //    type: 'POST',
+            //    url: '/Dashboard/DeleteTodo',
+            //    data: { Job: Job},
+            //    ContentType: 'application/Json',
+            //    dataType: "json",
+            //    success: function (response) {
+            //        if (response == "OK") {
+            //              location.reload();
+            //        } else {
+            //            alert("Ekleme başarısız.");
+            //        }
+            //    },
+            //    error: function (e) {
+            //        alert("Todo gönderilemiyor. Error: ", e);
+            //    }
+            //});
+        });
+    });
+
+</script>
