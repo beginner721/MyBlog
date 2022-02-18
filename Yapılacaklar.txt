@@ -1,0 +1,6 @@
+
+-Database-
+
+Database kısmında comment rating oranları yazıldı, bu kısımda verilen notlar ve countları bulunuyor.
+Birbirlerine bölünerek Average Score kısmı da eklenebilir direkt database üzerinden.
+
