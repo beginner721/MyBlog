@@ -1,6 +1,20 @@
 
 -Database-
 
-Database kýsmýnda comment rating oranlarý yazýldý, bu kýsýmda verilen notlar ve countlarý bulunuyor.
-Birbirlerine bölünerek Average Score kýsmý da eklenebilir direkt database üzerinden.
+	Database kýsmýnda comment rating oranlarý yazýldý, bu kýsýmda verilen notlar ve countlarý bulunuyor.
+	Birbirlerine bölünerek Average Score kýsmý da eklenebilir direkt database üzerinden.
 
+
+-Controller-
+
+	Dashboard controller kýsmýnda son 7 gün içinde yazýlan makaleler listelenmeli. (tamamlandý)
+
+	 -Writer
+	EditProfile içinde kullanýlan frontend kýsmýný Yeni blog ekle kýsmýna da uyarlayacaðýz.
+	Edit profile içinde ayrý bir þifreyi deðiþtirme sayfasý  oluþturulacak.
+ 
+	 -ToDo 
+	Todo listte addmodelerror kýsmýna tekrar bakýlacak.
+
+	 -Register
+	 Register controllerdaki karmaþýk if else yapýsý düzeltilmeli.

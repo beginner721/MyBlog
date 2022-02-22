@@ -3,6 +3,7 @@ using Business.ValidationRules;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
-
+    [AllowAnonymous]
     public class RegisterController : Controller
     {
         WriterManager writerManager = new WriterManager(new EfWriterDal());
@@ -22,24 +23,34 @@ namespace Demo.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(Writer writer)
+        public IActionResult Index(Writer writer,string pass2)
         {
-            WriterValidator validationRules = new WriterValidator();
-            ValidationResult results = validationRules.Validate(writer);
-            if (results.IsValid)
+            if (writer.Password!=pass2)
             {
-                writer.Status = true;
-                writer.About = "Boş";
-                writerManager.Add(writer);
-                return RedirectToAction("Index", "Article");
+                //add model errorda ilk parametre frontend kısmında name kısmına denk geliyor.
+                ModelState.AddModelError("password", "Şifreler uyuşmuyor.");
+
             }
             else
             {
-                foreach (var item in results.Errors)
+                WriterValidator validationRules = new WriterValidator();
+                ValidationResult results = validationRules.Validate(writer);
+                if (results.IsValid)
                 {
-                    ModelState.AddModelError(item.PropertyName,item.ErrorMessage);
+                    writer.Status = true;
+                    writer.About = "Boş";
+                    writerManager.Add(writer);
+                    return RedirectToAction("Index", "Article");
+                }
+                else
+                {
+                    foreach (var item in results.Errors)
+                    {
+                        ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    }
                 }
             }
+           
             return View();
             
         }

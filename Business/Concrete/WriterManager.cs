@@ -22,5 +22,31 @@ namespace Business.Concrete
         {
             _writerDal.Add(writer);
         }
+
+        public void Delete(Writer entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Writer> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Writer GetById(int id)
+        {
+            return _writerDal.Get(id);
+        }
+
+        public List<Writer> GetWriterById(int id)
+        {
+
+            return _writerDal.GetAll(a => a.Id == id);
+        }
+
+        public void Update(Writer entity)
+        {
+            _writerDal.Update(entity);
+        }
     }
 }

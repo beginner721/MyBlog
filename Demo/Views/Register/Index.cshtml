@@ -46,7 +46,9 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="exampleInputPassword2 mb-2">Tekrar Şifre</label>
-                            <input type="password" class="form-control" id="password2" placeholder="" required="">
+                            <input type="password" class="form-control" id="password2" name="pass2" placeholder="" required="">
+                            @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+
                         </div>
                     </div>
                     <button @*onclick="compareText()"*@ type="submit" id="btn_register" class="btn btn-primary submit mb-4">Register</button>
@@ -74,18 +76,18 @@
 
 
 
-        $("#btn_register").click(function (e) {
-            var text1 = document.getElementById("password1").value;
-            var text2 = document.getElementById("password2").value;
+        //$("#btn_register").click(function (e) {
+        //    var text1 = document.getElementById("password1").value;
+        //    var text2 = document.getElementById("password2").value;
 
-            if (text1 == text2) {
+        //    if (text1 == text2) {
 
-                alert("Kayıt başarılı. Anasayfa'ya yönlendiriliyorsunuz...");
-            } else {
-                alert("Şifreleriniz uyuşmuyor. Tekrar deneyin.");
-                e.preventDefault();
-            }
-        });
+        //        alert("Kayıt başarılı. Anasayfa'ya yönlendiriliyorsunuz...");
+        //    } else {
+        //        alert("Şifreleriniz uyuşmuyor. Tekrar deneyin.");
+        //        e.preventDefault();
+        //    }
+        //});
 
             //Bu kısımda refresh engellenemiyor.
             //function compareText() {
