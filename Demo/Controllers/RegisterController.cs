@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace Demo.Controllers
         [HttpPost]
         public IActionResult Index(Writer writer,string pass2)
         {
+            //Bu kısımlardaki if else'ler düzenlenecek ve daha sade hale getirilecek.
             if (writer.Password!=pass2)
             {
                 //add model errorda ilk parametre frontend kısmında name kısmına denk geliyor.

@@ -10,8 +10,12 @@
 	Dashboard controller kýsmýnda son 7 gün içinde yazýlan makaleler listelenmeli. (tamamlandý)
 
 	 -Writer
-	EditProfile içinde kullanýlan frontend kýsmýný Yeni blog ekle kýsmýna da uyarlayacaðýz.
-	Edit profile içinde ayrý bir þifreyi deðiþtirme sayfasý  oluþturulacak.
+	EditProfile içinde kullanýlan frontend kýsmýný Yeni blog ekle kýsmýna da uyarlayacaðýz. (tamamlandý)
+	Edit profile içinde ayrý bir þifreyi deðiþtirme bölümü oluþturulacak. (tamamlandý)
+	Edit profile içerisinde bulunan þifre kýsýmlarý gözden geçirilecek ve düzenlenecek. Mevcut haliyle tekrar þifre girilmesi eski þifrenin onayý gerekiyor. (tamamlandý)
+	Karmaþýk bir if else yapýsý var bu da düzenlenmeli.
+	Yazara default profil fotosu verilmeli ilk kayýtta.
+	Edit profile kýsmýnda mevcut görselin bir görüntüsü olmalý.
  
 	 -ToDo 
 	Todo listte addmodelerror kýsmýna tekrar bakýlacak.

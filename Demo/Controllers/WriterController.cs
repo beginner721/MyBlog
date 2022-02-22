@@ -5,6 +5,7 @@ using Demo.Models;
 using Entities.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -52,27 +53,55 @@ namespace Demo.Controllers
         }
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult EditProfile(Writer writer)
-        {
+        //Bu kısımlardaki if else'ler düzenlenecek ve daha sade hale getirilecek.
 
-            WriterValidator validator = new WriterValidator();
-            ValidationResult result = validator.Validate(writer);
-            if (result.IsValid)
+        public IActionResult EditProfile(Writer writer, AddProfileImage formImage)
+        {
+            if (formImage.Image!=null)
             {
-                writerManager.Update(writer);
-                return RedirectToAction("Index", "Dashboard");
+                var extension = Path.GetExtension(formImage.Image.FileName);
+                var imageName=Guid.NewGuid() + extension;
+                var location= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles",imageName);
+                var stream= new FileStream(location, FileMode.Create);
+                formImage.Image.CopyTo(stream);
+                writer.Image = imageName;
+            }
+
+            var writerOldData = writerManager.GetById(writer.Id);
+            if (writerOldData.Password == writer.Password)
+            {
+                WriterValidator validator = new WriterValidator();
+                ValidationResult result = validator.Validate(writer);
+                if (result.IsValid)
+                {
+
+                    writerManager.Update(writer);
+                    return RedirectToAction("Index", "Dashboard");
+
+
+
+
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                    }
+                }
 
             }
             else
             {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                }
+                TempData["error"] = "Eski şifre hatalı.";
             }
+
+            
 
             return View();
         }
+
+        //Alt kısımlara ihtiyacımız yok , görsel yükleme kısmı edit profile kısmına eklendi. Add actionları silinecek.
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Add()
@@ -92,7 +121,11 @@ namespace Demo.Controllers
                 var stream = new FileStream(location, FileMode.Create);
                 writer.Image.CopyTo(stream);
                 wr.Image = newImageName;
-                
+
+            }
+            else
+            {
+                return View();
             }
             wr.Email=writer.Email;
             wr.LastName=writer.LastName;
@@ -102,6 +135,27 @@ namespace Demo.Controllers
             wr.About=writer.About;
             writerManager.Add(wr);
             return View();
+        }
+        [AllowAnonymous]
+        [HttpPost]
+        public IActionResult PasswordChange(string oldPass ,string newPass, string newPassAgain)
+        {
+            var writerData = writerManager.GetById(1);
+
+            if (oldPass != null && writerData.Password== oldPass)
+            {
+                if (newPass== newPassAgain)
+                {
+                    writerData.Password= newPass;
+                    writerManager.Update(writerData);
+                    TempData["success"] = "Şifre değiştirme işlemi başarılı.";
+                    return RedirectToAction("EditProfile", "Writer");
+                }
+               
+            }
+            TempData["error"] = "Eski şifre hatalı.";
+            return RedirectToAction("EditProfile", "Writer");
+
         }
     }
 }

@@ -3,8 +3,10 @@
     ViewData["Title"] = "EditProfile";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
 }
-@using (Html.BeginForm("EditProfile", "Writer", FormMethod.Post))
+@using (Html.BeginForm("EditProfile", "Writer", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    <p style="color:mediumseagreen;">@TempData["success"]</p>
+    <p style="color:tomato;">@TempData["error"]</p>
     <div class="col-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
@@ -15,18 +17,26 @@
                 *@                    <div class="form-group">
                     <label for="exampleInputName1">Ad</label>
                     @Html.TextBoxFor(a=>a.FirstName, new{@class="form-control"})
+                    @Html.ValidationMessageFor(a => a.FirstName, "", new { @class = "text-danger" })
+
                 </div>
                 <div class="form-group">
                     <label for="exampleInputName1">Soyad</label>
                     @Html.TextBoxFor(a=>a.LastName, new{@class="form-control"})
+                    @Html.ValidationMessageFor(a => a.LastName, "", new { @class = "text-danger" })
+
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail3">Email address</label>
                     @Html.TextBoxFor(a=>a.Email, new{@class="form-control", type="email",placeholder="Eposta adresi"})
+                    @Html.ValidationMessageFor(a => a.Email, "", new { @class = "text-danger" })
+
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword4">Password</label>
+                    <label for="exampleInputPassword4">Password <small>*Bilgileri değiştirebilmek için şifrenizi girmelisiniz.</small></label>
                     @Html.PasswordFor(a=>a.Password, new{@class="form-control"})
+                    @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+
                 </div>
 
                 <div class="form-group">
@@ -41,6 +51,11 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Profil Fotoğrafı</label>
+                    <input type="file" name="Image" />
+                </div>
+
+                <div class="form-group">
                     <label for="exampleTextarea1">Hakkında</label>
                     @Html.TextAreaFor(a=>a.About,10,3, new{@class="form-control", type="text",placeholder="Kendinden bahset..."})
                 </div>
@@ -52,5 +67,36 @@
         </div>
     </div>
 
+
+}
+
+@using (Html.BeginForm("PasswordChange", "Writer", FormMethod.Post))
+{
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Şifre Değiştirme</h4>
+
+                <div class="form-group">
+                    <label for="exampleInputPassword4">Eski Şifreniz</label>
+                    <input type="password" class="form-control" id="password1" name="oldPass" placeholder="" required="">
+                    @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword4">Yeni Şifre</label>
+                    <input type="password" class="form-control" id="password1" name="newPass" placeholder="" required="">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword4">Tekrar yeni şifre</label>
+                    <input type="password" class="form-control" id="password1" name="newPassAgain" placeholder="" required="">
+                    buraya viewbag ile hata koyacağız.
+
+                </div>
+                <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
+
+            </div>
+        </div>
+    </div>
 
 }
