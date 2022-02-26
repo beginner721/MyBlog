@@ -24,5 +24,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<NewsLetter> NewsLetters { get; set; }
         public DbSet<ToDo> ToDos { get; set; }
         public DbSet<ArticleRating> ArticleRatings { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

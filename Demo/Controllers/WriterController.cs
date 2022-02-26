@@ -49,6 +49,7 @@ namespace Demo.Controllers
         public IActionResult EditProfile()
         {
             var writerValue = writerManager.GetById(1);
+            ViewBag.Image = writerValue.Image;
             return View(writerValue);
         }
         [AllowAnonymous]
@@ -57,16 +58,6 @@ namespace Demo.Controllers
 
         public IActionResult EditProfile(Writer writer, AddProfileImage formImage)
         {
-            if (formImage.Image!=null)
-            {
-                var extension = Path.GetExtension(formImage.Image.FileName);
-                var imageName=Guid.NewGuid() + extension;
-                var location= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles",imageName);
-                var stream= new FileStream(location, FileMode.Create);
-                formImage.Image.CopyTo(stream);
-                writer.Image = imageName;
-            }
-
             var writerOldData = writerManager.GetById(writer.Id);
             if (writerOldData.Password == writer.Password)
             {
@@ -74,13 +65,8 @@ namespace Demo.Controllers
                 ValidationResult result = validator.Validate(writer);
                 if (result.IsValid)
                 {
-
                     writerManager.Update(writer);
                     return RedirectToAction("Index", "Dashboard");
-
-
-
-
                 }
                 else
                 {
@@ -96,12 +82,24 @@ namespace Demo.Controllers
                 TempData["error"] = "Eski şifre hatalı.";
             }
 
-            
+            if (formImage.Image!=null)
+            {
+                var extension = Path.GetExtension(formImage.Image.FileName);
+                var imageName=Guid.NewGuid() + extension;
+                var location= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles",imageName);
+                var stream= new FileStream(location, FileMode.Create);
+                formImage.Image.CopyTo(stream);
+                writer.Image = imageName;
+            }
+            else
+            {
+                writer.Image = writerOldData.Image;
+            }
 
             return View();
         }
 
-        //Alt kısımlara ihtiyacımız yok , görsel yükleme kısmı edit profile kısmına eklendi. Add actionları silinecek.
+        //Alt kısımlara ihtiyacımız yok , görsel yükleme kısmı edit profile kısmına eklendi. Add actionları ve view'ları silinecek.
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Add()

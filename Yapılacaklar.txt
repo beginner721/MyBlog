@@ -13,12 +13,14 @@
 	EditProfile içinde kullanýlan frontend kýsmýný Yeni blog ekle kýsmýna da uyarlayacaðýz. (tamamlandý)
 	Edit profile içinde ayrý bir þifreyi deðiþtirme bölümü oluþturulacak. (tamamlandý)
 	Edit profile içerisinde bulunan þifre kýsýmlarý gözden geçirilecek ve düzenlenecek. Mevcut haliyle tekrar þifre girilmesi eski þifrenin onayý gerekiyor. (tamamlandý)
-	Karmaþýk bir if else yapýsý var bu da düzenlenmeli.
-	Yazara default profil fotosu verilmeli ilk kayýtta.
-	Edit profile kýsmýnda mevcut görselin bir görüntüsü olmalý.
+	Karmaþýk bir if else yapýsý var bu da düzenlenmeli, ayrýca writer bilgileri normal þekilde doldurulmalý.
+
+		Alt kýsýmda iki problem çözülmedi, default olan için farklý bir dosya yolu gösterilmesi gerekiyor.
+	Yazara default profil fotosu verilmeli ilk kayýtta. (sonradan deðiþince guid oluyor, frontend kýsmýna yollama problemi var. çözülecek.)
+	Edit profile kýsmýnda mevcut görselin bir görüntüsü olmalý. (tamamlandý ama doðru çözüm olmayabilir.)
  
 	 -ToDo 
-	Todo listte addmodelerror kýsmýna tekrar bakýlacak.
+	Todo listte addmodelerror kýsmýna tekrar bakýlacak. Register Controller'da bulunan kullaným uyarlanabilir mi kontrol edilmeli
 
 	 -Register
 	 Register controllerdaki karmaþýk if else yapýsý düzeltilmeli.
