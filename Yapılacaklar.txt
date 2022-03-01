@@ -24,3 +24,6 @@
 
 	 -Register
 	 Register controllerdaki karmaþýk if else yapýsý düzeltilmeli.
+	
+	-Notification
+	Sadece status true olanlar gözükecek...
