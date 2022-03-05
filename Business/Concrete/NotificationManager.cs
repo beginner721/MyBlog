@@ -20,7 +20,7 @@ namespace Business.Concrete
 
         public void Add(Notification entity)
         {
-            throw new NotImplementedException();
+            _notificationDal.Add(entity);
         }
 
         public void Delete(Notification entity)

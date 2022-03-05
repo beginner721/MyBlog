@@ -27,3 +27,7 @@
 	
 	-Notification
 	Sadece status true olanlar gözükecek...
+
+-Genel
+	- Ýçeriðin/datanýn eklenmesinin ardýndan geçen süreyi hesaplayan helper controller kýsmýna eklendi. (örn: 2 saat önce)
+	- Aktive edilmeyen dashboard içerisindeki todo list aktive edildi. Database e baðlandý ve kullanýma hazýr. (UX kötü durumda)
