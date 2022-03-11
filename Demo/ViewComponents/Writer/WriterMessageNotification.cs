@@ -10,11 +10,11 @@ namespace Demo.ViewComponents.Writer
 {
     public class WriterMessageNotification:ViewComponent
     {
-        MessageManager messageManager = new MessageManager(new EfMessageDal());
+        Message2Manager messageManager = new Message2Manager(new EfMessage2Dal());
         public IViewComponentResult Invoke()
         {
-            string test = "baran@gmail.com";
-            var values = messageManager.GetAllInboxByWriter(test); 
+            int id = 1;
+            var values = messageManager.GetAllInboxByWriter(id); 
             return View(values);
         }
     }

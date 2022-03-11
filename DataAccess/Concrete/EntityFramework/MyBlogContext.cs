@@ -14,6 +14,24 @@ namespace DataAccess.Concrete.EntityFramework
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyBlogDB;Trusted_Connection=true");
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Burada bire çok ilişiki mevcut, HasOne=> Bir, WithMany=>Çok
+
+            //Bir Gönderici, birçok gönderilen mesaja sahip olabilir, Gönderici Id'si ile birlikte.
+            modelBuilder.Entity<Message2>()
+                .HasOne(a=> a.SenderUser)
+                .WithMany(b=> b.SentMessage)
+                .HasForeignKey(c=> c.SenderId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            //Bir Alıcı, birçok alınan mesaja sahip olabilir, Alıcı Id'si ile birlikte.
+            modelBuilder.Entity<Message2>()
+                .HasOne(a => a.ReceiverUser)
+                .WithMany(b => b.ReceivedMessage)
+                .HasForeignKey(c => c.ReceiverId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        }
 
         public DbSet<About> Abouts { get; set; }
         public DbSet<Article> Articles { get; set; }
@@ -26,5 +44,6 @@ namespace DataAccess.Concrete.EntityFramework
         public DbSet<ArticleRating> ArticleRatings { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Message2> Message2s { get; set; }
     }
 }

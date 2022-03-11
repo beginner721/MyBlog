@@ -19,5 +19,8 @@ namespace Entities.Concrete
         public string Image { get; set; }
         public bool Status { get; set; }
         public List<Article> Articles { get; set; }
+
+        public virtual ICollection<Message2> SentMessage { get; set; }
+        public virtual ICollection<Message2> ReceivedMessage { get; set; }
     }
 }
