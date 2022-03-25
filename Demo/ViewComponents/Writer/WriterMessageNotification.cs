@@ -14,7 +14,7 @@ namespace Demo.ViewComponents.Writer
         public IViewComponentResult Invoke()
         {
             int id = 1;
-            var values = messageManager.GetAllInboxByWriter(id); 
+            var values = messageManager.GetMessageListByWriter(id); 
             return View(values);
         }
     }

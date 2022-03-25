@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
-    [AllowAnonymous]
     public class ArticleController : Controller
     {
         ArticleManager articleManager = new ArticleManager(new EfArticleDal());
@@ -33,7 +32,10 @@ namespace Demo.Controllers
         [HttpGet]
         public IActionResult ArticleListByWriter()
         {
-            var values = articleManager.GetAllWithCategoryByWriter(1);
+            MyBlogContext context = new MyBlogContext();
+            var user = User.Identity.Name;
+            var writerId = context.Writers.Where(a => a.Email == user).Select(a => a.Id).FirstOrDefault();
+            var values = articleManager.GetAllWithCategoryByWriter(writerId);
             return View(values);
         }
         [HttpGet]

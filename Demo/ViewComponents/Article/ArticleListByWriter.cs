@@ -14,7 +14,10 @@ namespace Demo.ViewComponents.Article
 
         public IViewComponentResult Invoke()
         {
-            var articles = articleManager.GetAllByWriter(1);
+            MyBlogContext context= new MyBlogContext();
+            var user = User.Identity.Name;
+            var writerId = context.Writers.Where(a => a.Email == user).Select(a => a.Id).FirstOrDefault();
+            var articles = articleManager.GetAllByWriter(writerId);
             return View(articles);
         }
     }

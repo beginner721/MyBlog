@@ -1,3 +1,7 @@
+-Not-
+101.derste admin classý oluþturdu ki 102.derste admin dashboarddaki widget kýsmýna owner kýsmýna db den ad soyad gelsin.
+bence gerek yok. o iki dersi atladým.
+
 
 -Database-
 
@@ -16,11 +20,13 @@
 	Karmaþýk bir if else yapýsý var bu da düzenlenmeli, ayrýca writer bilgileri normal þekilde doldurulmalý.
 
 		Alt kýsýmda iki problem çözülmedi, default olan için farklý bir dosya yolu gösterilmesi gerekiyor.
-	Yazara default profil fotosu verilmeli ilk kayýtta. (sonradan deðiþince guid oluyor, frontend kýsmýna yollama problemi var. çözülecek.)
+	Yazara default profil fotosu verilmeli ilk kayýtta. (sonradan deðiþince guid oluyor, frontend kýsmýna yollama problemi var. çözülecek.) tilda silinebilir ? belki çözer.
+	örn: ~/writer/assets/images/faces/face4.jpg
 	Edit profile kýsmýnda mevcut görselin bir görüntüsü olmalý. (tamamlandý ama doðru çözüm olmayabilir.)
  
 	 -ToDo 
 	Todo listte addmodelerror kýsmýna tekrar bakýlacak. Register Controller'da bulunan kullaným uyarlanabilir mi kontrol edilmeli
+	ToDo list butonlarýnýn id si alýnamýyor, çözülmeli. (çözüldü ancak hala sayfada baþka submit buttonu olursa patlar...)
 
 	 -Register
 	 Register controllerdaki karmaþýk if else yapýsý düzeltilmeli.

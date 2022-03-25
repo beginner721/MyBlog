@@ -1,0 +1,20 @@
+﻿@model Entities.Concrete.Message2
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/WriterLayout.cshtml";
+}
+
+<h1>Mesaj Detay</h1>
+<br />
+   @* @Html.Label("ID")*@
+    @Html.HiddenFor(a=> a.Id,new {@class="form-control"})
+
+    <br />
+    @Html.Label("Mesaj Başlığı")
+    @Html.TextBoxFor(a=> a.Subject,new {@class="form-control"}) 
+    <br />
+   
+    @Html.Label("İçerik")
+    @Html.TextAreaFor(a=> a.MessageDetails,20,20,new {@class="form-control"})
+    <br />
+    <button class="btn btn-success" onclick="return confirm('Değişiklikleri onaylıyor musun?')">Kaydet</button>

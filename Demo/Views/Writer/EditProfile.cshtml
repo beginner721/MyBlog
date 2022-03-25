@@ -34,7 +34,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword4">Password <small>*Bilgileri değiştirebilmek için şifrenizi girmelisiniz.</small></label>
-                    @Html.PasswordFor(a=>a.Password, new{@class="form-control"})
+                    @Html.PasswordFor(a=>a.Password, new{@class="form-control", required=""})
                     @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
 
                 </div>
@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label for="exampleInputPassword4">Eski Şifreniz</label>
                     <input type="password" class="form-control" id="password1" name="oldPass" placeholder="" required="">
-                    @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
+                   @* @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })*@
 
                 </div>
                 <div class="form-group">

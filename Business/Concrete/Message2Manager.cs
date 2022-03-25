@@ -33,14 +33,14 @@ namespace Business.Concrete
             return _messageDal.GetAll();
         }
 
-        public List<Message2> GetAllInboxByWriter(int id)
+        public List<Message2> GetMessageListByWriter(int id)
         {
-            return _messageDal.GetAll(a => a.ReceiverId == id);
+            return _messageDal.GetMessageListByWriter(id);
         }
 
         public Message2 GetById(int id)
         {
-            throw new NotImplementedException();
+            return _messageDal.Get(id);
         }
 
         public void Update(Message2 entity)

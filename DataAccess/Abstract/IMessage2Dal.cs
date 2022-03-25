@@ -9,5 +9,6 @@ namespace DataAccess.Abstract
 {
     public interface IMessage2Dal:IEntityRepository<Message2>
     {
+        List<Message2> GetMessageListByWriter(int id);
     }
 }

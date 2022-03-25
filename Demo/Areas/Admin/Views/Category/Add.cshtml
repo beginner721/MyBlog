@@ -1,0 +1,29 @@
+﻿@model Entities.Concrete.Category
+
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Kategori Ekle</h1>
+<br />
+@using (Html.BeginForm("Add", "Category", FormMethod.Post))
+{
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                @Html.Label("Kategori Adı")
+                <small>* @Html.ValidationMessageFor(a=> a.Name)</small>
+                @Html.TextBoxFor(a=> a.Name,new{@class="form-control"})
+                <br />
+                @Html.Label("Karegori Açıklaması")
+                <small>* @Html.ValidationMessageFor(a=> a.Description)</small>
+                @Html.TextAreaFor(a=> a.Description,20,20,new{@class="form-control"})
+                <br />
+                <button class="btn btn-info">Ekle</button>
+            </div>
+        </div>
+    </div>
+}
+
+

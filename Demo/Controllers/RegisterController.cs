@@ -41,7 +41,7 @@ namespace Demo.Controllers
                 {
                     writer.Status = true;
                     writer.About = "Boş";
-                    //writer.Image = "wwwroot/WriterImageFiles/default.png";
+                    writer.Image = "WriterImageFiles/default.png";
                     writerManager.Add(writer);
                     return RedirectToAction("Index", "Article");
                 }

@@ -1,6 +1,7 @@
 ﻿@using Entities.Concrete
 @model List<ToDo>
 
+   
 <div class="col-md-5 grid-margin stretch-card">
     <div class="card">
         <div class="card-body">
@@ -42,9 +43,8 @@
         $(document).ready(function () {
 
         $("button").click(function(e) {
-    if(this.id!="sendJob")
-    {
-
+     if(this.type=="submit" && this.id!="sendJob")
+    { //sayfada başka button olursa patlayabilecek bir kod....
         var JobId= this.id;
               $.ajax({
                 type: 'POST',
@@ -56,7 +56,7 @@
                     if (response == "OK") {
                           location.reload();
                     } else {
-                        alert("Ekleme başarısız.");
+                        alert("Silme başarısız.");
                     }
                 },
                 error: function (e) {

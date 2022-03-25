@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Demo.Controllers
 {
-    [AllowAnonymous]
+    
     public class DashboardController : Controller
     {
         public IActionResult Index()

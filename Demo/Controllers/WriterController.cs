@@ -20,8 +20,14 @@ namespace Demo.Controllers
     {
         WriterManager writerManager = new WriterManager(new EfWriterDal());
 
+        [Authorize]
         public IActionResult Index()
         {
+            var usermail = User.Identity.Name;
+            ViewBag.Name = usermail;
+            MyBlogContext context= new MyBlogContext();
+            var writerName = context.Writers.Where(a => a.Email == usermail).Select(b => b.FirstName).FirstOrDefault();
+            ViewBag.Name2= writerName;
             return View();
         }
 
@@ -44,57 +50,57 @@ namespace Demo.Controllers
         {
             return PartialView();
         }
-        [AllowAnonymous]
+        
         [HttpGet]
         public IActionResult EditProfile()
         {
-            var writerValue = writerManager.GetById(1);
+            MyBlogContext context = new MyBlogContext();
+            var user = User.Identity.Name;
+            var writerId = context.Writers.Where(a => a.Email == user).Select(a => a.Id).FirstOrDefault();
+            var writerValue = writerManager.GetById(writerId);
             ViewBag.Image = writerValue.Image;
             return View(writerValue);
         }
-        [AllowAnonymous]
         [HttpPost]
         //Bu kısımlardaki if else'ler düzenlenecek ve daha sade hale getirilecek.
 
         public IActionResult EditProfile(Writer writer, AddProfileImage formImage)
         {
+            WriterValidator validator = new WriterValidator();
+            ValidationResult result = validator.Validate(writer);
             var writerOldData = writerManager.GetById(writer.Id);
-            if (writerOldData.Password == writer.Password)
+            if (writerOldData.Password == writer.Password && result.IsValid)
             {
-                WriterValidator validator = new WriterValidator();
-                ValidationResult result = validator.Validate(writer);
-                if (result.IsValid)
+                if (formImage.Image != null)
                 {
-                    writerManager.Update(writer);
-                    return RedirectToAction("Index", "Dashboard");
+                    var extension = Path.GetExtension(formImage.Image.FileName);
+                    var imageName =  Guid.NewGuid() + extension;
+                    var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles", imageName);
+                    var stream = new FileStream(location, FileMode.Create);
+                    formImage.Image.CopyTo(stream);
+                    writer.Image = "WriterImageFiles/"+ imageName;
                 }
                 else
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                    }
+                    writer.Image = writerOldData.Image;
                 }
 
+
+                writerManager.Update(writer);
+                return RedirectToAction("Index", "Dashboard");
+
+
             }
             else
             {
-                TempData["error"] = "Eski şifre hatalı.";
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+                
             }
 
-            if (formImage.Image!=null)
-            {
-                var extension = Path.GetExtension(formImage.Image.FileName);
-                var imageName=Guid.NewGuid() + extension;
-                var location= Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles",imageName);
-                var stream= new FileStream(location, FileMode.Create);
-                formImage.Image.CopyTo(stream);
-                writer.Image = imageName;
-            }
-            else
-            {
-                writer.Image = writerOldData.Image;
-            }
+
 
             return View();
         }
@@ -103,7 +109,7 @@ namespace Demo.Controllers
         [AllowAnonymous]
         [HttpGet]
         public IActionResult Add()
-        {   
+        {
             return View();
         }
         [AllowAnonymous]
@@ -111,9 +117,9 @@ namespace Demo.Controllers
         public IActionResult Add(AddProfileImage writer)
         {
             Writer wr = new Writer();
-            if (writer.Image!=null)
+            if (writer.Image != null)
             {
-                var extension= Path.GetExtension(writer.Image.FileName);
+                var extension = Path.GetExtension(writer.Image.FileName);
                 var newImageName = Guid.NewGuid() + extension;
                 var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles/", newImageName);
                 var stream = new FileStream(location, FileMode.Create);
@@ -125,31 +131,32 @@ namespace Demo.Controllers
             {
                 return View();
             }
-            wr.Email=writer.Email;
-            wr.LastName=writer.LastName;
-            wr.FirstName=   writer.FirstName;
-            wr.Password=writer.Password;
+            wr.Email = writer.Email;
+            wr.LastName = writer.LastName;
+            wr.FirstName = writer.FirstName;
+            wr.Password = writer.Password;
             wr.Status = true;
-            wr.About=writer.About;
+            wr.About = writer.About;
             writerManager.Add(wr);
             return View();
         }
+
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult PasswordChange(string oldPass ,string newPass, string newPassAgain)
+        public IActionResult PasswordChange(string oldPass, string newPass, string newPassAgain)
         {
             var writerData = writerManager.GetById(1);
 
-            if (oldPass != null && writerData.Password== oldPass)
+            if (oldPass != null && writerData.Password == oldPass)
             {
-                if (newPass== newPassAgain)
+                if (newPass == newPassAgain)
                 {
-                    writerData.Password= newPass;
+                    writerData.Password = newPass;
                     writerManager.Update(writerData);
                     TempData["success"] = "Şifre değiştirme işlemi başarılı.";
                     return RedirectToAction("EditProfile", "Writer");
                 }
-               
+
             }
             TempData["error"] = "Eski şifre hatalı.";
             return RedirectToAction("EditProfile", "Writer");
