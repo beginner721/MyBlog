@@ -210,7 +210,10 @@
             });
         });
     </script>
-
+    @await RenderSectionAsync("scripts",false)
+    @*Bütün scriptler yüklendikten sonra bu sectionda indeximizin içinde bulunan script komutlarını çalıştırmak daha sağlıklı
+    olacaktır. Diğer türlü bazı scriptler yüklenmeden indexteki komutlar doğru çalışmayabilir.
+    Bir örneği Admin/Writer/Index kısmında kullanıldı...*@
 </body>
 
 </html>

@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<h1>Yazar Ajax İşlemleri</h1>
+<br />
+<button type="button" id="btnGetList" class="btn btn-outline-primary">Yazar Listesi</button>
+<button type="button" id="btnGetById" class="btn btn-outline-success">Yazar Getir</button>
+<br />
+<br />
+<div id="writerList">
+    Yazarlar bu kısımda olacak
+</div>
+<br />
+<div id="getWriterById">
+    buraya bir yazar gelecek.
+</div>
+<br />
+<div>
+    <input type="text" id="writerIdInput" placeholder="Yazarın Id değeri" class="form-control" />
+</div>
+
+@section scripts{
+<script>
+        $("#btnGetList").click(function(){
+            $.ajax({
+                contentType:"application/json",
+                dataType:"json",
+                type:"GET",
+                url:"/Admin/Writer/WriterList",
+                success: function(func){
+                    let writer=jQuery.parseJSON(func);
+                    console.log(writer);
+
+                    let tableHtml='<table class="table table-bordered"> <tr> <th> Id</th>  <th> Yazar Adı</th></tr>';
+                    $.each(writer,(index,value)=>{
+                        tableHtml+=`<tr><td>${value.Id}</td> <td>${value.Name}</td></tr>`
+                    });
+                    tableHtml+="</table>";
+
+                    $("#writerList").html(tableHtml);
+                }
+            });
+        });
+
+        $("#btnGetById").click(a=>{
+            let writerId=$("#writerIdInput").val();
+            $.ajax({
+                contentType:"application/json",
+                dataType:"json",
+                type:"get",
+                url:"/Admin/Writer/GetWriterById",
+                data:{id:writerId}, /*ilk parametre server taraflı değişken adı, ikincisi ise buradaki değişken adı*/
+                success:function(funcSucc){
+                    let writer= jQuery.parseJSON(funcSucc);
+                    console.log(writer);
+                }
+            })
+
+        });
+</script>
+}
