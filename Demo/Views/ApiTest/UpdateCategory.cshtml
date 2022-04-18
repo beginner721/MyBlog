@@ -1,0 +1,32 @@
+﻿@using Demo.Controllers
+@model Data
+@{
+    ViewData["Title"] = "UpdateCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<h1>Kategori Güncelleme API</h1>
+<form method="post">
+        @Html.TextBoxFor(a=> a.id,new {type="hidden"})
+        <br />
+
+        <label>Kategori Adı</label>
+        <br />
+        @Html.TextBoxFor(a=> a.name)
+        <br />
+
+        <label type="hidden">Kategori Açıklaması</label>
+        <br />
+
+        @Html.TextBoxFor(a=> a.description)
+        <br />
+
+        <label>Kategori Durumu (status)</label>
+        <br />
+
+        @Html.TextBoxFor(a=> a.status)
+        <br />
+        <button class="btn btn-outline-success">Güncelle</button>
+        
+</form>
+

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
+    [AllowAnonymous]
     public class ArticleController : Controller
     {
         ArticleManager articleManager = new ArticleManager(new EfArticleDal());

@@ -1,0 +1,23 @@
+﻿@using Demo.Controllers
+@model Data
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<form method="post">
+    <label>Kategori Bilgileri</label>
+    Kategori Adı
+    <input type="hidden" asp-for="@Model.id" class="form-control" value=0 /> 
+
+    <input type="text" asp-for="@Model.name" class="form-control" /> 
+    Kategori Açıklaması
+
+    <input type="text" asp-for="@Model.description" class="form-control" />
+    Kategori Durumu(status)
+
+    <input type="text" asp-for="@Model.status" class="form-control" />
+    <br />
+    <button type="submit" class="btn btn-info">Ekle</button>
+
+</form>
+

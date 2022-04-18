@@ -1,0 +1,31 @@
+﻿@using Demo.Controllers
+@model List<Data>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>#</th>
+        <th>Ad </th>
+        <th>Açıklama </th>
+        <th>Durum </th>
+        <th>Sil </th>
+        <th>Düzenle </th>
+    </tr>
+   
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.id</td>
+            <td>@item.name</td>
+            <td>@item.description</td>
+            <td>@item.status</td>
+            <td><a href="/ApiTest/DeleteCategory/@item.id" class="btn btn-outline-danger">Sil</a></td>
+            <td><a href="/ApiTest/UpdateCategory/@item.id" class="btn btn-outline-success">Düzenle</a></td>
+        </tr>
+    }
+</table>
+<a href ="/ApiTest/AddCategory" class="btn btn-outline-primary">Yeni Kategori Ekle</a>

@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Notlar", "Notlar", "{099C00
 		Yapılacaklar.txt = Yapılacaklar.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogApi", "BlogApi\BlogApi.csproj", "{F865B941-9A86-4E39-AC95-B06D8310CC67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{DF4F49B5-1944-42C0-94EB-190B0CF3C85E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF4F49B5-1944-42C0-94EB-190B0CF3C85E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF4F49B5-1944-42C0-94EB-190B0CF3C85E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F865B941-9A86-4E39-AC95-B06D8310CC67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F865B941-9A86-4E39-AC95-B06D8310CC67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F865B941-9A86-4E39-AC95-B06D8310CC67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F865B941-9A86-4E39-AC95-B06D8310CC67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
