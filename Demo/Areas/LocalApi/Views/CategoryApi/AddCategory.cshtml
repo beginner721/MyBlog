@@ -1,11 +1,14 @@
-﻿@using Demo.Controllers
-@model Data
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Demo.Areas.LocalApi.Models
+@model CategoryApi
 @{
     ViewData["Title"] = "AddCategory";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+
 <form method="post">
-    <label>Kategori Bilgileri</label>
+    <h2>Kategori Bilgileri</h2>
+    <br />
     Kategori Adı
     <input type="hidden" asp-for="@Model.id" class="form-control" value=0 /> 
 
@@ -20,4 +23,3 @@
     <button type="submit" class="btn btn-info">Ekle</button>
 
 </form>
-

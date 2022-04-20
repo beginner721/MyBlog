@@ -1,24 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Demo.Areas.LocalApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Controllers
+namespace Demo.Areas.LocalApi.Controllers
 {
+    [Area("LocalApi")]
     [AllowAnonymous]
-    public class ApiTestController : Controller
+    public class CategoryApiController : Controller
     {
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var httpClient = new HttpClient();
             var responseMessage = await httpClient.GetAsync("https://localhost:44394/api/categories/getall");
             var jsonString = await responseMessage.Content.ReadAsStringAsync();
 
-            var results = JsonConvert.DeserializeObject<DataRootObject>(jsonString);
+            var results = JsonConvert.DeserializeObject<CategoryListRootObject>(jsonString);
             var listOfData = results.data;
 
 
@@ -28,14 +29,14 @@ namespace Demo.Controllers
 
             return View(listOfData);
         }
-
+        [HttpGet]
         public IActionResult AddCategory()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddCategory(Data category)
+        public async Task<IActionResult> AddCategory(CategoryApi category)
         {
             var httpClient = new HttpClient();
             var jsonCategory = JsonConvert.SerializeObject(category);
@@ -57,7 +58,7 @@ namespace Demo.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonCategory = await responseMessage.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<OneDataRootObject>(jsonCategory);
+                var value = JsonConvert.DeserializeObject<OneCategoryRootObject>(jsonCategory);
 
                 var getData = value.data;
                 return View(getData);
@@ -65,13 +66,13 @@ namespace Demo.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateCategory(Data category)
+        public async Task<IActionResult> UpdateCategory(CategoryApi category)
         {
             var httpClient = new HttpClient();
             var jsonCategory = JsonConvert.SerializeObject(category);
 
-            var content= new StringContent(jsonCategory,Encoding.UTF8, "application/json");
-            var responseMessage = await httpClient.PutAsync("https://localhost:44394/api/categories/update",content);
+            var content = new StringContent(jsonCategory, Encoding.UTF8, "application/json");
+            var responseMessage = await httpClient.PutAsync("https://localhost:44394/api/categories/update", content);
 
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -79,7 +80,7 @@ namespace Demo.Controllers
             }
             return View(category);
         }
-
+        [HttpGet]
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var httpClient = new HttpClient();
@@ -90,26 +91,5 @@ namespace Demo.Controllers
             }
             return View();
         }
-    }
-
-
-    public class OneDataRootObject
-    {//This class for one data, not List of Data
-        public Data data { get; set; }
-        public string success { get; set; }
-        public string message { get; set; }
-    }
-    public class DataRootObject
-    {
-        public List<Data> data { get; set; }
-        public string success { get; set; }
-        public string message { get; set; }
-    }
-    public class Data
-    {
-        public string id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public bool status { get; set; }
     }
 }

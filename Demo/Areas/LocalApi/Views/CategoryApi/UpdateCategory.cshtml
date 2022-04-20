@@ -1,9 +1,9 @@
-﻿@using Demo.Controllers
-@model Data
+﻿@using Demo.Areas.LocalApi.Models
+@model CategoryApi
 @{
     ViewData["Title"] = "UpdateCategory";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
-}
+},
 
 <h1>Kategori Güncelleme API</h1>
 <form method="post">
@@ -29,4 +29,3 @@
         <button class="btn btn-outline-success">Güncelle</button>
         
 </form>
-

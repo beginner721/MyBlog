@@ -1,11 +1,11 @@
-﻿@using Demo.Controllers
+﻿@using Demo.Areas.LocalApi.Models
 @model List<ArticleApi>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
 <div class="table-responsive">
-    <table class="table">
+    <table class="table table-bordered">
         <tr>
             <th class="col-1">#ID</th>
             <th class="col-1">Kategori Id</th>
@@ -22,18 +22,17 @@
                 <td>@item.id</td>
                 <td>@item.categoryid</td>
                 <td>@item.title</td>
-                <td style="max-width:900px; display: inline-block;
-word-break: break-word;
-table-layout:fixed;">
+                <td style="max-width:900px; display: inline-block; word-break: break-word; table-layout:fixed;">
                     @item.content
                 </td>
                 <td>@item.creationdate</td>
                 <td>@item.status</td>
-                <td><a href="/ApiArticle/DeleteArticle/@item.id" class="btn btn-outline-danger">Sil</a></td>
-                <td><a href="/ApiArticle/UpdateArticle/@item.id" class="btn btn-outline-success">Güncelle</a></td>
+                <td><a href="/LocalApi/ArticleApi/DeleteArticle/@item.id" class="btn btn-outline-danger">Sil</a></td>
+                <td><a href="/LocalApi/ArticleApi/UpdateArticle/@item.id" class="btn btn-outline-success">Güncelle</a></td>
             </tr>
         }
     </table>
 </div>
-<a href="/ApiArticle/AddArticle" class="btn btn-outline-primary">Yeni Makale Ekle</a>
+<a href="/LocalApi/ArticleApi/AddArticle" class="btn btn-outline-primary">Yeni Makale Ekle</a>
+
 

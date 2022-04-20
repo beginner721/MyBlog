@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Demo.Areas.LocalApi.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
@@ -7,10 +8,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Demo.Controllers
+namespace Demo.Areas.LocalApi.Controllers
 {
+    [Area("LocalApi")]
     [AllowAnonymous]
-    public class ApiArticleController : Controller
+    public class ArticleApiController : Controller
     {
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -19,7 +21,7 @@ namespace Demo.Controllers
             var responseMessage = await httpClient.GetAsync("https://localhost:44394/api/articles/getall");
             var jsonString = await responseMessage.Content.ReadAsStringAsync();
 
-            var results = JsonConvert.DeserializeObject<ArticleRootObject>(jsonString);
+            var results = JsonConvert.DeserializeObject<ArticleListRootObject>(jsonString);
             var listOfArticle = results.data;
 
             return View(listOfArticle);
@@ -67,9 +69,9 @@ namespace Demo.Controllers
         public async Task<IActionResult> UpdateArticle(ArticleApi data)
         {
             var httpClient = new HttpClient();
-            var jsonArticle= JsonConvert.SerializeObject(data);
+            var jsonArticle = JsonConvert.SerializeObject(data);
 
-            StringContent content= new StringContent(jsonArticle, Encoding.UTF8, "application/json");
+            StringContent content = new StringContent(jsonArticle, Encoding.UTF8, "application/json");
             var responseMessage = await httpClient.PutAsync("https://localhost:44394/api/articles/update", content);
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -89,26 +91,5 @@ namespace Demo.Controllers
             return View();
         }
     }
-
-    class OneArticleRootObject
-    {
-        public ArticleApi data { get; set; }
-        public string status { get; set; }
-        public string message { get; set; }
-    }
-    class ArticleRootObject
-    {
-        public List<ArticleApi> data { get; set; }
-        public string status { get; set; }
-        public string message { get; set; }
-    }
-    public class ArticleApi
-    {
-        public string id { get; set; }
-        public string categoryid { get; set; }
-        public string title { get; set; }
-        public string content { get; set; }
-        public DateTime creationdate { get; set; }
-        public bool status { get; set; }
-    }
+    
 }

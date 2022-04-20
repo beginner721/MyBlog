@@ -1,0 +1,25 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Demo.Areas.LocalApi.Models
+@model ArticleApi
+@{
+    ViewData["Title"] = "AddArticle";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<form method = "post">
+    <h2>Makale Ekle</h2>
+    <br />
+    <input type="hidden" asp-for="@Model.id" class="form-control" value=0 />
+    Kategori Id
+    <input type="text" asp-for="@Model.categoryid" class="form-control" />
+    Başlık
+    <input type="text" asp-for="@Model.title" class="form-control" />
+    İçerik
+    <input type="text" asp-for="@Model.content" class="form-control" />
+    Tarih
+    <input type="date" asp-for="@Model.creationdate" class="form-control" />
+    Durum (status)
+    <input type="text" asp-for="@Model.status" class="form-control" />
+
+    <button type="submit" class="btn btn-info">Ekle</button>
+</form>
