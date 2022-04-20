@@ -1,0 +1,39 @@
+﻿@using Demo.Controllers
+@model List<ArticleApi>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+<div class="table-responsive">
+    <table class="table">
+        <tr>
+            <th class="col-1">#ID</th>
+            <th class="col-1">Kategori Id</th>
+            <th class="col-1">Başlık</th>
+            <th class="col">İçerik</th>
+            <th class="col-1">Tarih</th>
+            <th class="col-1">Durum (status)</th>
+            <th class="col-1">Sil</th>
+            <th class="col-1">Güncelle</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.id</td>
+                <td>@item.categoryid</td>
+                <td>@item.title</td>
+                <td style="max-width:900px; display: inline-block;
+word-break: break-word;
+table-layout:fixed;">
+                    @item.content
+                </td>
+                <td>@item.creationdate</td>
+                <td>@item.status</td>
+                <td><a href="/ApiArticle/DeleteArticle/@item.id" class="btn btn-outline-danger">Sil</a></td>
+                <td><a href="/ApiArticle/UpdateArticle/@item.id" class="btn btn-outline-success">Güncelle</a></td>
+            </tr>
+        }
+    </table>
+</div>
+<a href="/ApiArticle/AddArticle" class="btn btn-outline-primary">Yeni Makale Ekle</a>
+
