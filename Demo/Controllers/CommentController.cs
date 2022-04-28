@@ -1,6 +1,7 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
+    [AllowAnonymous]
     public class CommentController : Controller
     {
         CommentManager commentManager = new CommentManager(new EfCommentDal());
@@ -26,7 +28,7 @@ namespace Demo.Controllers
         {
             comment.Date = DateTime.Parse(DateTime.Now.ToShortDateString());
             comment.Status = true;
-            comment.ArticleId = 5;
+            comment.ArticleId = 47;
             commentManager.Add(comment);
             return Json("OK");
         }

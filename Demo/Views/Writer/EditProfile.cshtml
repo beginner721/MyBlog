@@ -1,4 +1,4 @@
-﻿@model Entities.Concrete.Writer
+﻿@model Demo.Models.UserProfileViewModel
 @{
     ViewData["Title"] = "EditProfile";
     Layout = "~/Views/Shared/WriterLayout.cshtml";
@@ -12,31 +12,32 @@
             <div class="card-body">
                 <h4 class="card-title">Yazar Profil Düzenleme</h4>
                 <br>
-                @Html.HiddenFor(a=> a.Id, new{@class="form-control"})
-                @*                <form class="forms-sample">
-                *@                    <div class="form-group">
-                    <label for="exampleInputName1">Ad</label>
-                    @Html.TextBoxFor(a=>a.FirstName, new{@class="form-control"})
-                    @Html.ValidationMessageFor(a => a.FirstName, "", new { @class = "text-danger" })
+        @*        @Html.HiddenFor(a=> a.Id, new{@class="form-control"})*@
+                                 
+                <div class="form-group">
+                    <label for="exampleInputName1">Ad Soyad</label>
+                    @Html.TextBoxFor(a=>a.NameSurname, new{@class="form-control"})
+                    @Html.ValidationMessageFor(a => a.NameSurname, "", new { @class = "text-danger" })
 
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputName1">Soyad</label>
-                    @Html.TextBoxFor(a=>a.LastName, new{@class="form-control"})
-                    @Html.ValidationMessageFor(a => a.LastName, "", new { @class = "text-danger" })
+                    <label for="exampleInputName1">Kullanıcı Adı</label>
+                    @Html.TextBoxFor(a=>a.UserName, new{@class="form-control"})
+                    @Html.ValidationMessageFor(a => a.UserName, "", new { @class = "text-danger" })
 
                 </div>
+
                 <div class="form-group">
                     <label for="exampleInputEmail3">Email address</label>
                     @Html.TextBoxFor(a=>a.Email, new{@class="form-control", type="email",placeholder="Eposta adresi"})
                     @Html.ValidationMessageFor(a => a.Email, "", new { @class = "text-danger" })
 
                 </div>
+
                 <div class="form-group">
                     <label for="exampleInputPassword4">Password <small>*Bilgileri değiştirebilmek için şifrenizi girmelisiniz.</small></label>
                     @Html.PasswordFor(a=>a.Password, new{@class="form-control", required=""})
                     @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })
-
                 </div>
 
                 <div class="form-group">
@@ -50,17 +51,17 @@
                     </div>
                 </div>
 
-                
+@*                
                 <div class="form-group">
                     <label>Profil Fotoğrafı</label> <br>
-                    <img src="~/@ViewBag.Image" alt="Profile Pic." style="max-width:10%;">
+                    <img src="@Model.Image" alt="Profile Pic." style="max-width:10%;">
                     <input type="file" name="Image" />
                 </div>
 
                 <div class="form-group">
                     <label for="exampleTextarea1">Hakkında</label>
                     @Html.TextAreaFor(a=>a.About,10,3, new{@class="form-control", type="text",placeholder="Kendinden bahset..."})
-                </div>
+                </div>*@
                 <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
                 <button class="btn btn-light">Vazgeç</button>
                 @*                </form>

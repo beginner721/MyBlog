@@ -4,8 +4,10 @@ using DataAccess.Concrete.EntityFramework;
 using Demo.Models;
 using Entities.Concrete;
 using FluentValidation.Results;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,15 +21,23 @@ namespace Demo.Controllers
     public class WriterController : Controller
     {
         WriterManager writerManager = new WriterManager(new EfWriterDal());
+        UserManager<AppUser> _userManager;
+        SignInManager<AppUser> _signInManager;
+
+        public WriterController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
 
         [Authorize]
         public IActionResult Index()
         {
             var usermail = User.Identity.Name;
             ViewBag.Name = usermail;
-            MyBlogContext context= new MyBlogContext();
+            MyBlogContext context = new MyBlogContext();
             var writerName = context.Writers.Where(a => a.Email == usermail).Select(b => b.FirstName).FirstOrDefault();
-            ViewBag.Name2= writerName;
+            ViewBag.Name2 = writerName;
             return View();
         }
 
@@ -50,59 +60,87 @@ namespace Demo.Controllers
         {
             return PartialView();
         }
-        
+
         [HttpGet]
-        public IActionResult EditProfile()
+        public async Task<IActionResult> EditProfile()
         {
-            MyBlogContext context = new MyBlogContext();
-            var user = User.Identity.Name;
-            var writerId = context.Writers.Where(a => a.Email == user).Select(a => a.Id).FirstOrDefault();
-            var writerValue = writerManager.GetById(writerId);
-            ViewBag.Image = writerValue.Image;
-            return View(writerValue);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            UserProfileViewModel userViewModel = user.Adapt<UserProfileViewModel>();
+            return View(userViewModel);
         }
         [HttpPost]
         //Bu kısımlardaki if else'ler düzenlenecek ve daha sade hale getirilecek.
 
-        public IActionResult EditProfile(Writer writer, AddProfileImage formImage)
+        public async Task<IActionResult> EditProfile(UserProfileViewModel userViewModel, AddProfileImage formImage)
         {
-            WriterValidator validator = new WriterValidator();
-            ValidationResult result = validator.Validate(writer);
-            var writerOldData = writerManager.GetById(writer.Id);
-            if (writerOldData.Password == writer.Password && result.IsValid)
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            bool isTrue = await _userManager.CheckPasswordAsync(user, userViewModel.Password);
+            if (isTrue)
             {
-                if (formImage.Image != null)
+                //IMAGE ADD SYSTEM...
+                user.NameSurname = userViewModel.NameSurname;
+                user.UserName= userViewModel.UserName;
+                user.Email= userViewModel.Email;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
                 {
-                    var extension = Path.GetExtension(formImage.Image.FileName);
-                    var imageName =  Guid.NewGuid() + extension;
-                    var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles", imageName);
-                    var stream = new FileStream(location, FileMode.Create);
-                    formImage.Image.CopyTo(stream);
-                    writer.Image = "WriterImageFiles/"+ imageName;
+                    await _userManager.UpdateSecurityStampAsync(user);
+                    await _signInManager.SignOutAsync();
+                    //eğer giriş çıkış işlemi yapılmaz ise cookie da eski bilgileri kalıyor, ve tekrar editprofile sayfasına girince
+                    //güncel değişmiş bilgilerini göremiyor, çünkü kullanıcı adını değiştirdi, cookie dan mevcut user'ı yakalayamıyoruz...
+                    await _signInManager.SignInAsync(user,true);
+                    return View(); //ilk denemesinde hata mesajı aldıysa View'e dönmesi lazım ki hata mesajı frontendden silinsin.
+
                 }
                 else
                 {
-                    writer.Image = writerOldData.Image;
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
                 }
 
-
-                writerManager.Update(writer);
-                return RedirectToAction("Index", "Dashboard");
-
-
             }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                }
-                
-            }
+            ModelState.AddModelError("Password", "Girilen şifre hatalı...");
+            return View(userViewModel);
+
+            //WriterValidator validator = new WriterValidator();
+            //ValidationResult result = validator.Validate(writer);
+            //var writerOldData = writerManager.GetById(writer.Id);
+            //if (writerOldData.Password == writer.Password && result.IsValid)
+            //{
+            //    if (formImage.Image != null)
+            //    {
+            //        var extension = Path.GetExtension(formImage.Image.FileName);
+            //        var imageName =  Guid.NewGuid() + extension;
+            //        var location = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/WriterImageFiles", imageName);
+            //        var stream = new FileStream(location, FileMode.Create);
+            //        formImage.Image.CopyTo(stream);
+            //        writer.Image = "WriterImageFiles/"+ imageName;
+            //    }
+            //    else
+            //    {
+            //        writer.Image = writerOldData.Image;
+            //    }
+
+
+            //    writerManager.Update(writer);
+            //    return RedirectToAction("Index", "Dashboard");
+
+
+            //}
+            //else
+            //{
+            //    foreach (var error in result.Errors)
+            //    {
+            //        ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+            //    }
+
+            //}
 
 
 
-            return View();
         }
 
         //Alt kısımlara ihtiyacımız yok , görsel yükleme kısmı edit profile kısmına eklendi. Add actionları ve view'ları silinecek.

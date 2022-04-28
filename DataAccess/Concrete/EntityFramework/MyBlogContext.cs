@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class MyBlogContext:DbContext
+    public class MyBlogContext : IdentityDbContext<AppUser,AppRole,int>
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,9 +21,9 @@ namespace DataAccess.Concrete.EntityFramework
 
             //Bir Gönderici, birçok gönderilen mesaja sahip olabilir, Gönderici Id'si ile birlikte.
             modelBuilder.Entity<Message2>()
-                .HasOne(a=> a.SenderUser)
-                .WithMany(b=> b.SentMessage)
-                .HasForeignKey(c=> c.SenderId)
+                .HasOne(a => a.SenderUser)
+                .WithMany(b => b.SentMessage)
+                .HasForeignKey(c => c.SenderId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             //Bir Alıcı, birçok alınan mesaja sahip olabilir, Alıcı Id'si ile birlikte.
@@ -31,6 +32,8 @@ namespace DataAccess.Concrete.EntityFramework
                 .WithMany(b => b.ReceivedMessage)
                 .HasForeignKey(c => c.ReceiverId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<About> Abouts { get; set; }

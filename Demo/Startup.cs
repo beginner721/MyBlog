@@ -1,3 +1,5 @@
+using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +28,15 @@ namespace Demo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MyBlogContext>();
+            services.AddIdentity<AppUser,AppRole>(a=>
+            {
+                a.Password.RequireUppercase = false;
+                a.Password.RequireNonAlphanumeric = false;
+
+            })
+                
+                .AddEntityFrameworkStores<MyBlogContext>();
             services.AddControllersWithViews();
 
             //Proje seviyesinde authorization.
@@ -54,7 +65,7 @@ namespace Demo
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code={0}");
+            //app.UseStatusCodePagesWithReExecute("/ErrorPage/Error1", "?code={0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -71,7 +82,7 @@ namespace Demo
 
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Login}/{action=Index}/{id?}");
             });
         }
     }

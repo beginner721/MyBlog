@@ -4,40 +4,51 @@
     ViewData["Title"] = "UpdateArticle";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
+@if (Model != null)
+{
+    @if (ViewBag.ErrorMessage != null)
+    {@*Geri dönen veriyle birlikte hata mesajı bulunabilir*@
+        <div> * @ViewBag.ErrorMessage</div>
+    }
+    <h1>Makale Güncelleme</h1>
+    <form method="post">
+        @Html.HiddenFor(a=> a.id)
+        <label>Kategori Id</label>
+        <br />
+        @Html.TextBoxFor(a=> a.categoryid)
+        <br />
 
-<h1>Makale Güncelleme</h1>
-<form method="post">
-    @Html.HiddenFor(a=> a.id)
-    <label>Kategori Id</label>
-    <br />
-    @Html.TextBoxFor(a=> a.categoryid)
-    <br />
+        <label>Başlık</label>
+        <br />
 
-    <label>Başlık</label>
-    <br />
+        @Html.TextBoxFor(a=> a.title)
+        <br />
 
-    @Html.TextBoxFor(a=> a.title)
-    <br />
+        <label>İçerik</label>
+        <br />
 
-    <label>İçerik</label>
-    <br />
+        @Html.TextAreaFor(a=> a.content)
+        <br />
 
-    @Html.TextAreaFor(a=> a.content)
-    <br />
+        <label>Tarih</label>
+        <br />
 
-    <label>Tarih</label>
-    <br />
+        @Html.TextBoxFor(a=> a.creationdate, new{type="date"})
+        <br />
 
-    @Html.TextBoxFor(a=> a.creationdate, new{type="date"})
-    <br />
+        <label>Durum (status)</label>
+        <br />
 
-    <label>Durum (status)</label>
-    <br />
+        @Html.TextBoxFor(a=> a.status)
+        <br />
 
-    @Html.TextBoxFor(a=> a.status)
-    <br />
+        <button type="submit" class="btn btn-outline-success">Güncelle</button>
 
-    <button type="submit" class="btn btn-outline-success">Güncelle</button>
-
-</form>
-
+    </form>
+}
+else
+{
+    <h2>Hata :(</h2>
+    <hr />
+    @ViewBag.ErrorMessage
+}

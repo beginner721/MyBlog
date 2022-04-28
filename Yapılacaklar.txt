@@ -1,7 +1,10 @@
 -Not-
-101.derste admin classý oluþturdu ki 102.derste admin dashboarddaki widget kýsmýna owner kýsmýna db den ad soyad gelsin.
-bence gerek yok. o iki dersi atladým.
 
+
+Identity eklendi, register sayfasýnda checkbox iþaretli deðilse kayýt baþarýsýz olmalý. Bunu halletmek lazým.
+
+SubscribeMail kýsmýnda 2 kayýt alýyor ajax,neden ? oysa yorumlarý tek kaydediyor... (ayný indexte iki ajax mevcut problem bu olabilir mi ?)
+Yorum ekle ajax calýsýyor sub mail de calýsýyor
 
 -Database-
 

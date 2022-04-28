@@ -17,14 +17,40 @@ namespace Demo.Areas.LocalApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var httpClient = new HttpClient();
-            var responseMessage = await httpClient.GetAsync("https://localhost:44394/api/articles/getall");
-            var jsonString = await responseMessage.Content.ReadAsStringAsync();
+            try
+            {
+                var httpClient = new HttpClient();
+                var responseMessage = await httpClient.GetAsync("https://localhost:44394/api/articles/getall");
+                var jsonString = await responseMessage.Content.ReadAsStringAsync();
 
-            var results = JsonConvert.DeserializeObject<ArticleListRootObject>(jsonString);
-            var listOfArticle = results.data;
+                var results = JsonConvert.DeserializeObject<ArticleListRootObject>(jsonString);
+                if (results.success == "true")
+                {
+                    var listOfArticle = results.data;
+                    return View(listOfArticle);
+                }
+                else
+                {
+                    if (results.message == "null")
+                    {
+                        ViewBag.ErrorMessage = "Bir hata meydana geldi.";
+                    }
+                    else
+                    {
+                        ViewBag.ErrorMessage = results.message;
+                    }
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.InnerException.Message;
+                return View();
+                
+            }
 
-            return View(listOfArticle);
+            
+            
         }
 
         [HttpGet]
@@ -40,30 +66,55 @@ namespace Demo.Areas.LocalApi.Controllers
 
             StringContent content = new StringContent(jsonArticle, Encoding.UTF8, "application/json");
             var responseMessage = await httpClient.PostAsync("https://localhost:44394/api/articles/add", content);
+            var jsonString = await responseMessage.Content.ReadAsStringAsync();
+
+            var results = JsonConvert.DeserializeObject<OneArticleRootObject>(jsonString);
+            
 
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
-            return View(jsonArticle);
+            else
+            {
+                if (results.message=="null")
+                {
+                    ViewBag.ErrorMessage = "Bir hata meydana geldi.";
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = results.message;
+                }
+                return View(data);
+            }
+            
         }
         [HttpGet]
         public async Task<IActionResult> UpdateArticle(int id)
         {
-            var httpClient = new HttpClient();
-            var responseMessage = await httpClient.GetAsync("https://localhost:44394/api/articles/get/" + id);
-            if (responseMessage.IsSuccessStatusCode)
+            try
             {
+                var httpClient = new HttpClient();
+                var responseMessage = await httpClient.GetAsync("https://localhost:44394/api/articles/get/" + id);
+
                 var jsonString = await responseMessage.Content.ReadAsStringAsync();
                 var results = JsonConvert.DeserializeObject<OneArticleRootObject>(jsonString);
-                var data = results.data;
+                if (responseMessage.IsSuccessStatusCode)
+                {
+                    return View(results.data);
 
-                return View(data);
-
+                }
+                else
+                {
+                    return View(results.message);
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.InnerException.Message;
+                return View();
             }
 
-
-            return View();
         }
         [HttpPost]
         public async Task<IActionResult> UpdateArticle(ArticleApi data)
@@ -73,11 +124,19 @@ namespace Demo.Areas.LocalApi.Controllers
 
             StringContent content = new StringContent(jsonArticle, Encoding.UTF8, "application/json");
             var responseMessage = await httpClient.PutAsync("https://localhost:44394/api/articles/update", content);
+            
+            var jsonString = await responseMessage.Content.ReadAsStringAsync();
+            var results= JsonConvert.DeserializeObject<OneArticleRootObject>(jsonString);
+
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
+                ViewBag.ErrorMessage= results.message;
+                return View(data);
+            }
         }
         [HttpGet]
         public async Task<IActionResult> DeleteArticle(int id)

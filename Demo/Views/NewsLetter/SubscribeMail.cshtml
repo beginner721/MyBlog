@@ -1,39 +1,61 @@
 ﻿<div class="tech-btm">
     <p>Yeni yazılarımızı eposta adresinize bildirim olarak almak isterseniz abone olun.</p>
+
     <form action="/NewsLetter/SubscribeMail" method="post">
+
         <input type="email" placeholder="Email" id="email" required="" name="mail">
-        <input class="form-control" type="submit" id="btnsend" value="Abone Ol">
+        <input class="form-control" type="button" id="btnsend" value="Abone Ol">
+
     </form>
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script>
+@*    <script>
         $(document).ready(function () {
 
-            $("#btnsend").click(function (e) {
-                e.preventDefault(); /*buttonun kendi görevlerinin tamamını iptal ediyor*/
-                var Email = document.getElementById("email").value; //mailfield
+        $("#btnsend").click(function (e) {
+        e.preventDefault(); /*buttonun kendi görevlerinin tamamını iptal ediyor*/
+        var Email = document.getElementById("email").value; //mailfield
 
-                $.ajax({
-                    type: 'POST',
-                    url: '/NewsLetter/SubscribeMail',
-                    data: { Mail: Email },
-                    ContentType: 'application/Json',
-                    dataType: "json",
-                    success: function (response) {
-                        if (response == "OK") {
-                            alert("Kaydınız alınmıştır.");
-                        }
-                        else {
-                            alert("Kayıt başarısız.");
-                        }
+        $.ajax({
+        type: 'POST',
+        url: '/NewsLetter/SubscribeMail',
+        data: { Mail: Email },
+        ContentType: 'application/Json',
+        dataType: "json",
+        success: function (response) {
+        if (response == "OK") {
+        alert("Kaydınız alınmıştır.");
+        }
+        else {
+        alert("Kayıt başarısız.");
+        }
 
 
-                    },
-                    error: function () {
-                        alert("Hata.");
+        },
+        error: function () {
+        alert("Hata.");
 
-                    }
-                });
-            });
+        }
         });
-    </script>
+        });
+        });
+    </script>*@
 </div>
+
+<script type="text/javascript">
+    $("#btnsend").click(function(e){
+        e.preventDefault();
+    let values={
+    Mail:$("#email").val()
+    };
+
+    $.ajax({
+    type:"post",
+    url:"/NewsLetter/SubscribeMail",
+    data: values,
+    success:function(func){
+    let result=jQuery.parseJSON(func);
+    }
+    });
+    });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript"></script>

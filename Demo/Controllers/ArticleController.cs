@@ -14,15 +14,16 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
-    [AllowAnonymous]
     public class ArticleController : Controller
     {
         ArticleManager articleManager = new ArticleManager(new EfArticleDal());
+        [AllowAnonymous]
         public IActionResult Index()
         {
             var articles = articleManager.GetAllWithCategory();
             return View(articles);
         }
+        [AllowAnonymous]
         public IActionResult ReadMore(int id)
         {
             ViewBag.id = id;

@@ -1,6 +1,7 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Controllers
 {
+    [AllowAnonymous]
     public class NewsLetterController : Controller
     {
         NewsLetterManager newsLetterManager = new NewsLetterManager(new EfNewsLetterDal());
@@ -24,7 +26,8 @@ namespace Demo.Controllers
         {
             newsLetter.MailStatus = true;
             newsLetterManager.AddEmailToNewsLetter(newsLetter);
-            return Json("OK");
+            return PartialView();
+            //return Json("OK");
         }
     }
 }

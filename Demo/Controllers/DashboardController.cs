@@ -15,9 +15,12 @@ namespace Demo.Controllers
         public IActionResult Index()
         {
             MyBlogContext context = new MyBlogContext();
+            var currentUserName = User.Identity.Name;
+            var currentUserMail = context.Users.Where(u => u.UserName == currentUserName).Select(a=> a.Email).FirstOrDefault();
+            var currentWriterId = context.Writers.Where(a => a.Email == currentUserMail).Select(a => a.Id).FirstOrDefault();
 
             ViewBag.TotalArticleCount = context.Articles.Count().ToString();
-            ViewBag.TotalArticleCountByWriter = context.Articles.Where(a => a.WriterId == 1).Count().ToString();
+            ViewBag.TotalArticleCountByWriter = context.Articles.Where(a => a.WriterId == currentWriterId).Count().ToString();
 
             var data = context.Articles.Where(a => a.CreateDate >= System.DateTime.Now.AddDays(-7)).Count().ToString();
             ViewBag.TotalArticleCountThisWeek = data;

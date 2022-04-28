@@ -7,6 +7,12 @@
 }
 
 <form method = "post">
+@if (ViewBag.ErrorMessage!=null)
+{
+    <div>
+        * @ViewBag.ErrorMessage
+    </div>
+}
     <h2>Makale Ekle</h2>
     <br />
     <input type="hidden" asp-for="@Model.id" class="form-control" value=0 />
