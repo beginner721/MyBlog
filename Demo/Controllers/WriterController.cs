@@ -68,9 +68,9 @@ namespace Demo.Controllers
             UserProfileViewModel userViewModel = user.Adapt<UserProfileViewModel>();
             return View(userViewModel);
         }
+
         [HttpPost]
         //Bu kısımlardaki if else'ler düzenlenecek ve daha sade hale getirilecek.
-
         public async Task<IActionResult> EditProfile(UserProfileViewModel userViewModel, AddProfileImage formImage)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -181,23 +181,38 @@ namespace Demo.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult PasswordChange(string oldPass, string newPass, string newPassAgain)
+        public IActionResult PasswordChange(PasswordChangeModel passwordModel)
         {
-            var writerData = writerManager.GetById(1);
-
-            if (oldPass != null && writerData.Password == oldPass)
+            if (ModelState.IsValid)
             {
-                if (newPass == newPassAgain)
+                var user = _userManager.FindByNameAsync(User.Identity.Name).Result;
+                var result = _userManager.ChangePasswordAsync(user,passwordModel.OldPass,passwordModel.NewPass).Result;
+                if (result.Succeeded)
                 {
-                    writerData.Password = newPass;
-                    writerManager.Update(writerData);
-                    TempData["success"] = "Şifre değiştirme işlemi başarılı.";
+                    _userManager.UpdateSecurityStampAsync(user);
+                    _signInManager.SignOutAsync();
+                    _signInManager.PasswordSignInAsync(user, passwordModel.NewPass, true, false);
                     return RedirectToAction("EditProfile", "Writer");
                 }
+                else
+                {
+                    string errors = "";
+                    foreach (var error in result.Errors)
+                    {
+                        errors+= error.Description + " ";
+                    }
+                    TempData["PasswordError"] = errors;
+                    return RedirectToAction("EditProfile");
 
+                }
             }
-            TempData["error"] = "Eski şifre hatalı.";
-            return RedirectToAction("EditProfile", "Writer");
+            else
+            {
+                TempData["PasswordError"] = "Şifreler hatalı.";
+                return RedirectToAction("EditProfile");
+            }
+                
+            
 
         }
     }

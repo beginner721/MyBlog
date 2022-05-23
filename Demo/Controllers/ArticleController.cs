@@ -5,6 +5,7 @@ using DataAccess.Concrete.EntityFramework;
 using Entities.Concrete;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -17,6 +18,14 @@ namespace Demo.Controllers
     public class ArticleController : Controller
     {
         ArticleManager articleManager = new ArticleManager(new EfArticleDal());
+
+        UserManager<AppUser> _userManager;
+
+        public ArticleController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         [AllowAnonymous]
         public IActionResult Index()
         {
@@ -34,10 +43,9 @@ namespace Demo.Controllers
         [HttpGet]
         public IActionResult ArticleListByWriter()
         {
-            MyBlogContext context = new MyBlogContext();
-            var user = User.Identity.Name;
-            var writerId = context.Writers.Where(a => a.Email == user).Select(a => a.Id).FirstOrDefault();
-            var values = articleManager.GetAllWithCategoryByWriter(writerId);
+            var userIdentity = _userManager.FindByNameAsync(User.Identity.Name).Result;
+
+            var values = articleManager.GetAllWithCategoryByWriter(userIdentity.Id);
             return View(values);
         }
         [HttpGet]
@@ -56,6 +64,10 @@ namespace Demo.Controllers
         [HttpPost]
         public IActionResult AddArticle(Article article)
         {
+
+            var userIdentity = _userManager.FindByNameAsync(User.Identity.Name).Result;
+
+
             ViewBag.CategoryValues = GetCategoryList();
             ArticleValidator validations = new ArticleValidator();
             ValidationResult result = validations.Validate(article);
@@ -63,7 +75,7 @@ namespace Demo.Controllers
             {
                 article.Status = true;
                 article.CreateDate = DateTime.Parse(DateTime.Now.ToShortDateString());
-                article.WriterId = 1;// Burası writera göre ayarlanacak.
+                article.WriterId = userIdentity.Id; //writera göre değişecektir.
                 articleManager.Add(article);
                 return RedirectToAction("ArticleListByWriter", "Article");
             }
@@ -92,7 +104,10 @@ namespace Demo.Controllers
         [HttpPost]
         public IActionResult Edit(Article article)
         {
-            article.WriterId = 1;
+            var userIdentity = _userManager.FindByNameAsync(User.Identity.Name).Result;
+
+
+            article.WriterId = userIdentity.Id;
             article.Status = true;
             articleManager.Update(article);
             return RedirectToAction("ArticleListByWriter");

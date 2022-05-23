@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -29,13 +30,13 @@ namespace Demo
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyBlogContext>();
-            services.AddIdentity<AppUser,AppRole>(a=>
-            {
-                a.Password.RequireUppercase = false;
-                a.Password.RequireNonAlphanumeric = false;
+            services.AddIdentity<AppUser, AppRole>(a =>
+             {
+                 a.Password.RequireUppercase = false;
+                 a.Password.RequireNonAlphanumeric = false;
 
-            })
-                
+             })
+
                 .AddEntityFrameworkStores<MyBlogContext>();
             services.AddControllersWithViews();
 
@@ -49,6 +50,15 @@ namespace Demo
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(a =>
             {
                 a.LoginPath = "/Login/Index";
+            });
+            services.ConfigureApplicationCookie(opts =>
+            {
+                //Cookie settings
+                opts.Cookie.HttpOnly = true;
+                opts.ExpireTimeSpan = TimeSpan.FromMinutes(100);
+                opts.AccessDeniedPath = new PathString("/Login/AccessDenied/");
+                opts.LoginPath = "/Login/Index/";
+                opts.SlidingExpiration = true;
             });
         }
 

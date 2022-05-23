@@ -1,6 +1,8 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Demo.Controllers
@@ -9,10 +11,18 @@ namespace Demo.Controllers
     public class MessageController : Controller
     {
         Message2Manager messageManager = new Message2Manager(new EfMessage2Dal());
+        UserManager<AppUser> _userManager;
+
+        public MessageController(UserManager<AppUser> userManager)
+        {
+            _userManager = userManager;
+        }
+
         public IActionResult InBox()
         {
-            int id = 1;
-            var values = messageManager.GetMessageListByWriter(id);
+            var userIdentity = _userManager.FindByNameAsync(User.Identity.Name).Result;
+
+            var values = messageManager.GetMessageListByWriter(userIdentity.Id);
             return View(values);
         }
 

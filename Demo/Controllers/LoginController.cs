@@ -42,11 +42,16 @@ namespace Demo.Controllers
                 else
                 {
                     ModelState.AddModelError("", "Hatalı giriş denemesi.");
-                    //return RedirectToAction("Index", "Login");
                 }
             }
             return View();
 
+        }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Login");
         }
 
         //[HttpPost]

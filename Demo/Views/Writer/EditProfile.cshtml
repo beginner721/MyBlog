@@ -12,8 +12,8 @@
             <div class="card-body">
                 <h4 class="card-title">Yazar Profil Düzenleme</h4>
                 <br>
-        @*        @Html.HiddenFor(a=> a.Id, new{@class="form-control"})*@
-                                 
+                @*        @Html.HiddenFor(a=> a.Id, new{@class="form-control"})*@
+
                 <div class="form-group">
                     <label for="exampleInputName1">Ad Soyad</label>
                     @Html.TextBoxFor(a=>a.NameSurname, new{@class="form-control"})
@@ -51,17 +51,17 @@
                     </div>
                 </div>
 
-@*                
-                <div class="form-group">
+                @*
+                    <div class="form-group">
                     <label>Profil Fotoğrafı</label> <br>
                     <img src="@Model.Image" alt="Profile Pic." style="max-width:10%;">
                     <input type="file" name="Image" />
-                </div>
+                    </div>
 
-                <div class="form-group">
+                    <div class="form-group">
                     <label for="exampleTextarea1">Hakkında</label>
                     @Html.TextAreaFor(a=>a.About,10,3, new{@class="form-control", type="text",placeholder="Kendinden bahset..."})
-                </div>*@
+                    </div>*@
                 <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
                 <button class="btn btn-light">Vazgeç</button>
                 @*                </form>
@@ -73,33 +73,8 @@
 
 }
 
-@using (Html.BeginForm("PasswordChange", "Writer", FormMethod.Post))
-{
-    <div class="col-12 grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <h4 class="card-title">Şifre Değiştirme</h4>
-
-                <div class="form-group">
-                    <label for="exampleInputPassword4">Eski Şifreniz</label>
-                    <input type="password" class="form-control" id="password1" name="oldPass" placeholder="" required="">
-                   @* @Html.ValidationMessageFor(a => a.Password, "", new { @class = "text-danger" })*@
-
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword4">Yeni Şifre</label>
-                    <input type="password" class="form-control" id="password1" name="newPass" placeholder="" required="">
-                </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword4">Tekrar yeni şifre</label>
-                    <input type="password" class="form-control" id="password1" name="newPassAgain" placeholder="" required="">
-                    buraya viewbag ile hata koyacağız.
-
-                </div>
-                <button type="submit" class="btn btn-gradient-primary mr-2">Güncelle</button>
-
-            </div>
-        </div>
-    </div>
-
+@{
+    var passModel = (PasswordChangeModel)ViewBag.PasswordChangeModel;
+    await Html.RenderPartialAsync("~/Views/Writer/PasswordChangePartial.cshtml", passModel);
 }
+
